@@ -177,39 +177,54 @@ add_filter('the_content', function($content) {
     return $content;
 }, 99);
 
-// 6. Staging init safeguards: remove canonical redirect and ensure permalinks & .htaccess
+// 6. Staging init safeguards: unconditionally block canonical redirects and ensure permalinks & .htaccess
+add_action('template_redirect', function() {
+    if (ppb_is_yamato_staging() || strpos($_SERVER['REQUEST_URI'], '/yamato') !== false) {
+        remove_action('template_redirect', 'redirect_canonical');
+    }
+}, 1);
+
+add_filter('redirect_canonical', function($redirect_url, $requested_url) {
+    if (
+        ppb_is_yamato_staging() ||
+        strpos($_SERVER['REQUEST_URI'], '/yamato') !== false ||
+        (isset($_SERVER['HTTP_HOST']) && strpos($_SERVER['HTTP_HOST'], 'bk-fip.unm.ac.id') !== false)
+    ) {
+        return false;
+    }
+    return $redirect_url;
+}, 1, 2);
+
 add_action('init', function() {
-    if (!ppb_is_yamato_staging()) return;
+    if (!ppb_is_yamato_staging() && strpos($_SERVER['REQUEST_URI'], '/yamato') === false) return;
 
-    // Remove WordPress canonical redirects that strip /yamato
-    remove_action('template_redirect', 'redirect_canonical');
-    add_filter('redirect_canonical', '__return_false', 99);
-
-    // Auto-create staging .htaccess in ABSPATH if missing or incomplete
+    // Auto-create staging .htaccess in multiple potential paths
+    $potential_paths = array();
     if (defined('ABSPATH')) {
-        $htaccess_path = ABSPATH . '.htaccess';
-        $needs_rules = false;
-        if (!file_exists($htaccess_path)) {
-            $needs_rules = true;
-        } else {
-            $content = @file_get_contents($htaccess_path);
-            if ($content === false || strpos($content, 'RewriteBase /yamato/') === false) {
-                $needs_rules = true;
-            }
-        }
+        $potential_paths[] = rtrim(ABSPATH, '/') . '/.htaccess';
+        $potential_paths[] = rtrim(ABSPATH, '/') . '/yamato/.htaccess';
+    }
+    if (isset($_SERVER['DOCUMENT_ROOT'])) {
+        $potential_paths[] = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . '/yamato/.htaccess';
+    }
 
-        if ($needs_rules && is_writable(ABSPATH)) {
-            $rules = "# BEGIN WordPress Staging /yamato\n" .
-                     "<IfModule mod_rewrite.c>\n" .
-                     "RewriteEngine On\n" .
-                     "RewriteBase /yamato/\n" .
-                     "RewriteRule ^index\\.php$ - [L]\n" .
-                     "RewriteCond %{REQUEST_FILENAME} !-f\n" .
-                     "RewriteCond %{REQUEST_FILENAME} !-d\n" .
-                     "RewriteRule . /yamato/index.php [L]\n" .
-                     "</IfModule>\n" .
-                     "# END WordPress Staging /yamato\n";
-            @file_put_contents($htaccess_path, $rules);
+    $rules = "# BEGIN WordPress Staging /yamato\n" .
+             "<IfModule mod_rewrite.c>\n" .
+             "RewriteEngine On\n" .
+             "RewriteBase /yamato/\n" .
+             "RewriteRule ^index\\.php$ - [L]\n" .
+             "RewriteCond %{REQUEST_FILENAME} !-f\n" .
+             "RewriteCond %{REQUEST_FILENAME} !-d\n" .
+             "RewriteRule . /yamato/index.php [L]\n" .
+             "</IfModule>\n" .
+             "# END WordPress Staging /yamato\n";
+
+    foreach ($potential_paths as $p) {
+        $dir = dirname($p);
+        if (is_dir($dir) && is_writable($dir)) {
+            if (!file_exists($p) || strpos(@file_get_contents($p), 'RewriteBase /yamato/') === false) {
+                @file_put_contents($p, $rules);
+            }
         }
     }
 
