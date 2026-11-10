@@ -3,7 +3,7 @@
  * Plugin Name: BK Connect Suite & PPB Engine
  * Plugin URI: https://bk-fip.unm.ac.id/
  * Description: Paket Lengkap Sistem Digital Prodi BK / Jurusan PPB FIP UNM: Desain Scholaro, Tipografi, Fixed Header, Filter Dosen & Mutu, Manajemen Akademik, Jadwal Ujian, Berita, Kemahasiswaan, dan Layanan Mahasiswa.
- * Version: 1.2.1
+ * Version: 1.2.2
  * Author: Jurusan PPB / BK FIP UNM
  * License: GPL-2.0+
  * Text Domain: bk-connect
@@ -26,17 +26,17 @@ if (!function_exists('ppb_is_yamato_staging')) {
         $script = isset($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : '';
 
         if (
+            strpos($host, 'bk-fip.unm.ac.id') !== false ||
             strpos($req, '/yamato') !== false ||
             strpos($script, '/yamato') !== false ||
             strpos(__DIR__, 'yamato') !== false ||
             (defined('WPSTG_DEV') && WPSTG_DEV) ||
             defined('WPSTAGING_VERSION') ||
-            (defined('WP_ENVIRONMENT_TYPE') && WP_ENVIRONMENT_TYPE === 'staging') ||
-            (strpos($host, 'bk-fip.unm.ac.id') !== false && (strpos($req, '/yamato') === 0 || strpos($script, '/yamato') === 0 || strpos(__FILE__, 'yamato') !== false))
+            (defined('WP_ENVIRONMENT_TYPE') && WP_ENVIRONMENT_TYPE === 'staging')
         ) {
             $is_staging = true;
         } else {
-            $is_staging = (strpos(get_option('home', ''), '/yamato') !== false || strpos(get_option('siteurl', ''), '/yamato') !== false);
+            $is_staging = false;
         }
         return $is_staging;
     }
@@ -63,7 +63,7 @@ if (!function_exists('ppb_filter_yamato_url')) {
             if (strpos($url, '/yamato/') === 0 || $url === '/yamato') {
                 return $url;
             }
-            return '/yamato' . $url;
+            return '/yamato' . ($url === '/' ? '/' : $url);
         }
 
         $current_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'bk-fip.unm.ac.id';
@@ -84,6 +84,22 @@ if (!function_exists('ppb_filter_yamato_url')) {
     }
 }
 
+// 1. Force home and siteurl options to include /yamato on staging
+add_filter('pre_option_home', function($val) {
+    if (ppb_is_yamato_staging()) {
+        return 'https://bk-fip.unm.ac.id/yamato';
+    }
+    return $val;
+}, 99);
+
+add_filter('pre_option_siteurl', function($val) {
+    if (ppb_is_yamato_staging()) {
+        return 'https://bk-fip.unm.ac.id/yamato';
+    }
+    return $val;
+}, 99);
+
+// 2. Filter core WordPress URL builders
 add_filter('home_url', function($url, $path = '', $orig_scheme = null, $blog_id = null) {
     return ppb_filter_yamato_url($url);
 }, 99, 4);
@@ -91,6 +107,166 @@ add_filter('home_url', function($url, $path = '', $orig_scheme = null, $blog_id 
 add_filter('site_url', function($url, $path = '', $scheme = null, $blog_id = null) {
     return ppb_filter_yamato_url($url);
 }, 99, 4);
+
+// 3. Prevent wp_redirect from sending visitors to live site without /yamato
+add_filter('wp_redirect', function($location, $status = 302) {
+    if (ppb_is_yamato_staging()) {
+        return ppb_filter_yamato_url($location);
+    }
+    return $location;
+}, 99, 2);
+
+// 4. Filter navigation menu URLs
+add_filter('wp_get_nav_menu_items', function($items) {
+    if (empty($items) || !is_array($items) || !ppb_is_yamato_staging()) {
+        return $items;
+    }
+    foreach ($items as &$item) {
+        if (!empty($item->url)) {
+            $item->url = ppb_filter_yamato_url($item->url);
+        }
+    }
+    unset($item);
+    return $items;
+}, 99);
+
+add_filter('nav_menu_link_attributes', function($atts, $item = null, $args = null, $depth = 0) {
+    if (ppb_is_yamato_staging() && !empty($atts['href'])) {
+        $atts['href'] = ppb_filter_yamato_url($atts['href']);
+    }
+    return $atts;
+}, 99, 4);
+
+add_filter('page_link', function($url, $post_id = 0, $sample = false) {
+    return ppb_filter_yamato_url($url);
+}, 99, 3);
+
+add_filter('post_link', function($url, $post = null, $leavename = false) {
+    return ppb_filter_yamato_url($url);
+}, 99, 3);
+
+add_filter('post_type_link', function($url, $post = null, $leavename = false, $sample = false) {
+    return ppb_filter_yamato_url($url);
+}, 99, 4);
+
+// 5. Rewrite HTML content links
+add_filter('the_content', function($content) {
+    if (empty($content) || !ppb_is_yamato_staging()) {
+        return $content;
+    }
+
+    $content = preg_replace_callback('/href=(["\'])(\/[^"\']*)(\1)/i', function($matches) {
+        $quote = $matches[1];
+        $href  = $matches[2];
+        if (strpos($href, '//') === 0 || strpos($href, '/yamato/') === 0 || $href === '/yamato') {
+            return 'href=' . $quote . $href . $quote;
+        }
+        return 'href=' . $quote . '/yamato' . ($href === '/' ? '/' : $href) . $quote;
+    }, $content);
+
+    $content = preg_replace_callback('/href=(["\'])(https?:\/\/bk-fip\.unm\.ac\.id)(\/[^"\']*)?(\1)/i', function($matches) {
+        $quote  = $matches[1];
+        $domain = $matches[2];
+        $path   = isset($matches[3]) ? $matches[3] : '/';
+        if (strpos($path, '/yamato/') === 0 || $path === '/yamato') {
+            return 'href=' . $quote . $domain . $path . $quote;
+        }
+        return 'href=' . $quote . $domain . '/yamato' . ($path === '/' ? '/' : $path) . $quote;
+    }, $content);
+
+    return $content;
+}, 99);
+
+// 6. Staging init safeguards: remove canonical redirect and ensure permalinks & .htaccess
+add_action('init', function() {
+    if (!ppb_is_yamato_staging()) return;
+
+    // Remove WordPress canonical redirects that strip /yamato
+    remove_action('template_redirect', 'redirect_canonical');
+    add_filter('redirect_canonical', '__return_false', 99);
+
+    // Auto-create staging .htaccess in ABSPATH if missing or incomplete
+    if (defined('ABSPATH')) {
+        $htaccess_path = ABSPATH . '.htaccess';
+        $needs_rules = false;
+        if (!file_exists($htaccess_path)) {
+            $needs_rules = true;
+        } else {
+            $content = @file_get_contents($htaccess_path);
+            if ($content === false || strpos($content, 'RewriteBase /yamato/') === false) {
+                $needs_rules = true;
+            }
+        }
+
+        if ($needs_rules && is_writable(ABSPATH)) {
+            $rules = "# BEGIN WordPress Staging /yamato\n" .
+                     "<IfModule mod_rewrite.c>\n" .
+                     "RewriteEngine On\n" .
+                     "RewriteBase /yamato/\n" .
+                     "RewriteRule ^index\\.php$ - [L]\n" .
+                     "RewriteCond %{REQUEST_FILENAME} !-f\n" .
+                     "RewriteCond %{REQUEST_FILENAME} !-d\n" .
+                     "RewriteRule . /yamato/index.php [L]\n" .
+                     "</IfModule>\n" .
+                     "# END WordPress Staging /yamato\n";
+            @file_put_contents($htaccess_path, $rules);
+        }
+    }
+
+    // Auto-activate post-name permalinks if currently plain
+    if (get_option('permalink_structure') === '') {
+        global $wp_rewrite;
+        if ($wp_rewrite) {
+            $wp_rewrite->set_permalink_structure('/%postname%/');
+            $wp_rewrite->flush_rules(false);
+        }
+    }
+}, 1);
+
+// 7. Auto-patch and intercept links in WP-Admin as well
+add_action('admin_footer', function() {
+    if (!ppb_is_yamato_staging()) return;
+    ?>
+    <script>
+    (function() {
+        function fixYamatoUrl(url) {
+            if (!url) return url;
+            if (url.indexOf('#') === 0 || url.indexOf('mailto:') === 0 || url.indexOf('javascript:') === 0) return url;
+            if (url.indexOf('://bk-fip.unm.ac.id') !== -1) {
+                try {
+                    var u = new URL(url);
+                    if (u.pathname.indexOf('/yamato/') !== 0 && u.pathname !== '/yamato') {
+                        u.pathname = '/yamato' + (u.pathname === '/' ? '/' : u.pathname);
+                        return u.toString();
+                    }
+                } catch(e) {}
+            }
+            return url;
+        }
+        function patchAdminLinks() {
+            var links = document.querySelectorAll('a[href]');
+            for (var i = 0; i < links.length; i++) {
+                var raw = links[i].getAttribute('href');
+                var fixed = fixYamatoUrl(raw);
+                if (fixed !== raw) links[i].setAttribute('href', fixed);
+            }
+        }
+        patchAdminLinks();
+        document.addEventListener('click', function(e) {
+            var a = e.target.closest('a');
+            if (!a) return;
+            var href = a.getAttribute('href');
+            var fixed = fixYamatoUrl(href);
+            if (fixed !== href) {
+                e.preventDefault();
+                e.stopPropagation();
+                window.location.href = fixed;
+            }
+        }, true);
+    })();
+    </script>
+    <?php
+});
 
 require_once __DIR__ . '/bk-fonts.php';
 require_once __DIR__ . '/ppb-portal-hub.php';
