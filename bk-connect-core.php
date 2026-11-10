@@ -25,13 +25,12 @@ if (!function_exists('ppb_is_yamato_staging')) {
         $req    = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
         $script = isset($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : '';
 
+        // Detect if running inside WP-Staging (/yamato)
         if (
-            strpos($host, 'bk-fip.unm.ac.id') !== false ||
             strpos($req, '/yamato') !== false ||
             strpos($script, '/yamato') !== false ||
             strpos(__DIR__, 'yamato') !== false ||
             (defined('WPSTG_DEV') && WPSTG_DEV) ||
-            defined('WPSTAGING_VERSION') ||
             (defined('WP_ENVIRONMENT_TYPE') && WP_ENVIRONMENT_TYPE === 'staging')
         ) {
             $is_staging = true;
