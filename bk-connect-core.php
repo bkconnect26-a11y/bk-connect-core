@@ -200,6 +200,9 @@ add_action('init', function() {
 
     // Auto-create staging .htaccess in multiple potential paths
     $potential_paths = array();
+    $wp_root = dirname(dirname(dirname(__DIR__)));
+    $potential_paths[] = $wp_root . '/.htaccess';
+    $potential_paths[] = $wp_root . '/yamato/.htaccess';
     if (defined('ABSPATH')) {
         $potential_paths[] = rtrim(ABSPATH, '/') . '/.htaccess';
         $potential_paths[] = rtrim(ABSPATH, '/') . '/yamato/.htaccess';
@@ -233,7 +236,7 @@ add_action('init', function() {
         global $wp_rewrite;
         if ($wp_rewrite) {
             $wp_rewrite->set_permalink_structure('/%postname%/');
-            $wp_rewrite->flush_rules(false);
+            $wp_rewrite->flush_rules(true);
         }
     }
 }, 1);
