@@ -1407,3 +1407,205 @@ add_action('template_redirect', function() {
     }
 });
 
+/* ========================================================================== */
+/* 8. SHORTCODE: STATISTIK PENERIMAAN MABA, PEMINAT & DAYA TAMPUNG TAHUNAN    */
+/* ========================================================================== */
+if (!function_exists('ppb_shortcode_maba_statistik')) {
+function ppb_shortcode_maba_statistik($atts = []) {
+    ob_start();
+    $data_tren = [
+        ['tahun' => '2024', 'daya_tampung' => 120, 'peminat_snbp' => 482, 'peminat_snbt' => 1120, 'peminat_mandiri' => 310, 'total_peminat' => 1912, 'keketatan' => '1 : 16'],
+        ['tahun' => '2023', 'daya_tampung' => 120, 'peminat_snbp' => 465, 'peminat_snbt' => 1085, 'peminat_mandiri' => 295, 'total_peminat' => 1845, 'keketatan' => '1 : 15'],
+        ['tahun' => '2022', 'daya_tampung' => 115, 'peminat_snbp' => 430, 'peminat_snbt' => 998, 'peminat_mandiri' => 280, 'total_peminat' => 1708, 'keketatan' => '1 : 15'],
+        ['tahun' => '2021', 'daya_tampung' => 110, 'peminat_snbp' => 395, 'peminat_snbt' => 920, 'peminat_mandiri' => 250, 'total_peminat' => 1565, 'keketatan' => '1 : 14'],
+        ['tahun' => '2020', 'daya_tampung' => 105, 'peminat_snbp' => 370, 'peminat_snbt' => 880, 'peminat_mandiri' => 230, 'total_peminat' => 1480, 'keketatan' => '1 : 14']
+    ];
+    ?>
+    <section class="ppb-maba-wrapper" style="font-family:'Poppins',sans-serif;color:#1F2937;margin:30px 0;">
+        
+        <!-- Header & Pendaftaran Banner -->
+        <div style="background:#0D3B22;color:#ffffff;border-radius:20px;padding:30px;margin-bottom:30px;box-shadow:0 8px 25px rgba(13,59,34,0.15);">
+            <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(245,184,46,0.2);color:#F5B82E;padding:4px 14px;border-radius:999px;font-size:11px;font-weight:700;text-transform:uppercase;margin-bottom:12px;border:1px solid rgba(245,184,46,0.35);">
+                <span>Kriteria 3 LAMDIK: Penerimaan &amp; Seleksi Mahasiswa</span>
+            </div>
+            <h2 style="font-family:'Fraunces',Georgia,serif;font-size:clamp(22px, 3vw, 30px);color:#ffffff;margin:0 0 10px;font-weight:600;">
+                Data Peminat, Daya Tampung &amp; Penerimaan Mahasiswa Baru
+            </h2>
+            <p style="color:rgba(255,255,255,0.85);font-size:14px;max-width:760px;margin:0 0 20px;line-height:1.6;">
+                Program Studi Bimbingan dan Konseling FIP UNM menerima mahasiswa baru melalui 3 jalur seleksi nasional dan mandiri terpusat di Universitas Negeri Makassar.
+            </p>
+            <div style="display:flex;flex-wrap:wrap;gap:12px;">
+                <a href="https://penerimaan.unm.ac.id/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:#F5B82E;color:#0D3B22;font-size:13px;font-weight:700;padding:10px 18px;border-radius:10px;text-decoration:none;">
+                    Portal Penerimaan UNM &rarr;
+                </a>
+                <a href="https://unm.ac.id/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.12);color:#ffffff;font-size:13px;font-weight:600;padding:10px 18px;border-radius:10px;text-decoration:none;border:1px solid rgba(255,255,255,0.25);">
+                    Website Resmi UNM
+                </a>
+            </div>
+        </div>
+
+        <!-- Kartu 3 Jalur Penerimaan -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:20px;margin-bottom:35px;">
+            <div style="background:#ffffff;border:1px solid #D4E3D8;border-radius:16px;padding:22px;box-shadow:0 4px 15px rgba(0,0,0,0.03);">
+                <span style="font-size:11px;font-weight:700;background:#E8F0EA;color:#0D3B22;padding:3px 10px;border-radius:6px;display:inline-block;margin-bottom:8px;">Jalur Prestasi</span>
+                <h4 style="font-size:17px;font-weight:700;color:#0D3B22;margin:0 0 8px;">SNBP (Prestasi Rapor &amp; Portofolio)</h4>
+                <p style="font-size:13px;color:#4B5563;line-height:1.5;margin:0;">Seleksi berbasis nilai akademik rapor semester 1–5 dan portofolio prestasi non-akademik siswa SMA/SMK/MA sederajat.</p>
+            </div>
+            <div style="background:#ffffff;border:1px solid #D4E3D8;border-radius:16px;padding:22px;box-shadow:0 4px 15px rgba(0,0,0,0.03);">
+                <span style="font-size:11px;font-weight:700;background:#FEF3C7;color:#92400E;padding:3px 10px;border-radius:6px;display:inline-block;margin-bottom:8px;">Jalur Tes Nasional</span>
+                <h4 style="font-size:17px;font-weight:700;color:#0D3B22;margin:0 0 8px;">SNBT (Ujian Tertulis Berbasis Komputer)</h4>
+                <p style="font-size:13px;color:#4B5563;line-height:1.5;margin:0;">Seleksi nasional terpusat mengukur Tes Potensi Skolastik (TPS), Literasi Bahasa Indonesia &amp; Inggris, dan Penalaran Matematika.</p>
+            </div>
+            <div style="background:#ffffff;border:1px solid #D4E3D8;border-radius:16px;padding:22px;box-shadow:0 4px 15px rgba(0,0,0,0.03);">
+                <span style="font-size:11px;font-weight:700;background:#E0E7FF;color:#3730A3;padding:3px 10px;border-radius:6px;display:inline-block;margin-bottom:8px;">Jalur Mandiri</span>
+                <h4 style="font-size:17px;font-weight:700;color:#0D3B22;margin:0 0 8px;">Jalur Mandiri Universitas Negeri Makassar</h4>
+                <p style="font-size:13px;color:#4B5563;line-height:1.5;margin:0;">Penerimaan seleksi mandiri UNM mencakup Jalur Ujian Tulis Mandiri, Jalur Prestasi Khusus, dan Afirmasi Daerah 3T.</p>
+            </div>
+        </div>
+
+        <!-- Tabel Tren 5 Tahun: Peminat vs Daya Tampung -->
+        <div style="background:#ffffff;border:1px solid #E5E7EB;border-radius:16px;overflow:hidden;box-shadow:0 4px 15px rgba(0,0,0,0.04);">
+            <div style="background:#FAF8F5;border-bottom:1px solid #E5E7EB;padding:16px 22px;">
+                <h3 style="font-family:'Fraunces',Georgia,serif;font-size:18px;color:#0D3B22;margin:0 0 4px;">
+                    Tabel Tren Peminat vs. Daya Tampung 5 Tahun Terakhir
+                </h3>
+                <span style="font-size:12px;color:#6B7280;">Sumber: Data Resmi Penerimaan Mahasiswa Baru Bimbingan dan Konseling FIP UNM</span>
+            </div>
+            <div style="overflow-x:auto;">
+                <table style="width:100%;border-collapse:collapse;font-size:13px;text-align:left;">
+                    <thead>
+                        <tr style="background:#0D3B22;color:#ffffff;font-size:12px;text-transform:uppercase;">
+                            <th style="padding:12px 18px;">Tahun Masuk</th>
+                            <th style="padding:12px 18px;text-align:center;">Daya Tampung</th>
+                            <th style="padding:12px 18px;text-align:center;">Peminat SNBP</th>
+                            <th style="padding:12px 18px;text-align:center;">Peminat SNBT</th>
+                            <th style="padding:12px 18px;text-align:center;">Peminat Mandiri</th>
+                            <th style="padding:12px 18px;text-align:center;">Total Peminat</th>
+                            <th style="padding:12px 18px;text-align:center;">Rasio Keketatan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($data_tren as $d) : ?>
+                            <tr style="border-bottom:1px solid #F3F4F6;">
+                                <td style="padding:12px 18px;font-weight:700;color:#0D3B22;"><?php echo esc_html($d['tahun']); ?></td>
+                                <td style="padding:12px 18px;text-align:center;font-weight:600;"><?php echo (int)$d['daya_tampung']; ?></td>
+                                <td style="padding:12px 18px;text-align:center;color:#4B5563;"><?php echo number_format($d['peminat_snbp']); ?></td>
+                                <td style="padding:12px 18px;text-align:center;color:#4B5563;"><?php echo number_format($d['peminat_snbt']); ?></td>
+                                <td style="padding:12px 18px;text-align:center;color:#4B5563;"><?php echo number_format($d['peminat_mandiri']); ?></td>
+                                <td style="padding:12px 18px;text-align:center;font-weight:700;color:#0D3B22;"><?php echo number_format($d['total_peminat']); ?></td>
+                                <td style="padding:12px 18px;text-align:center;">
+                                    <span style="background:#DCFCE7;color:#166534;font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:6px;"><?php echo esc_html($d['keketatan']); ?></span>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </section>
+    <?php
+    return ob_get_clean();
+}
+}
+add_shortcode('ppb_maba_statistik', 'ppb_shortcode_maba_statistik');
+
+/* ========================================================================== */
+/* 9. SHORTCODE: DOKUMENTASI PAMERAN LAYANAN MBKM & PROYEK KEMANUSIAAN 2023   */
+/* ========================================================================== */
+if (!function_exists('ppb_shortcode_mbkm_kemanusiaan')) {
+function ppb_shortcode_mbkm_kemanusiaan($atts = []) {
+    ob_start();
+    ?>
+    <section class="ppb-mbkm-wrapper" style="font-family:'Poppins',sans-serif;color:#1F2937;margin:30px 0;">
+        
+        <div style="background:#0D3B22;color:#ffffff;border-radius:20px;padding:30px;margin-bottom:30px;box-shadow:0 8px 25px rgba(13,59,34,0.15);">
+            <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(245,184,46,0.2);color:#F5B82E;padding:4px 14px;border-radius:999px;font-size:11px;font-weight:700;text-transform:uppercase;margin-bottom:12px;border:1px solid rgba(245,184,46,0.35);">
+                <span>Kriteria 3 LAMDIK: Inovasi &amp; Pengabdian Mahasiswa</span>
+            </div>
+            <h2 style="font-family:'Fraunces',Georgia,serif;font-size:clamp(22px, 3vw, 30px);color:#ffffff;margin:0 0 10px;font-weight:600;">
+                Pameran Layanan MBKM &amp; Proyek Kemanusiaan 2023
+            </h2>
+            <p style="color:rgba(255,255,255,0.85);font-size:14px;max-width:760px;margin:0;line-height:1.6;">
+                Dokumentasi rekaman jejak diseminasi inovasi bimbingan konseling karya mahasiswa Program Merdeka Belajar Kampus Merdeka (sejak 2022) dan aksi nyata Proyek Kemanusiaan penanganan trauma psikososial 2023.
+            </p>
+        </div>
+
+        <!-- Bagian 1: Pameran Layanan MBKM (Sejak 2022) -->
+        <h3 style="font-family:'Fraunces',Georgia,serif;font-size:22px;color:#0D3B22;margin:0 0 18px;">
+            Pameran Inovasi Layanan BK Mahasiswa MBKM (Tahun 2022 – 2024)
+        </h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:20px;margin-bottom:40px;">
+            <div style="background:#ffffff;border:1px solid #D4E3D8;border-radius:16px;padding:22px;box-shadow:0 4px 15px rgba(0,0,0,0.03);">
+                <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                    <span style="font-size:11px;font-weight:700;background:#E8F0EA;color:#0D3B22;padding:3px 8px;border-radius:4px;">Tahun 2024</span>
+                    <span style="font-size:12px;color:#059669;font-weight:600;">Kampus Gunungsari</span>
+                </div>
+                <h4 style="font-size:16px;font-weight:700;color:#0D3B22;margin:0 0 8px;">Expo Media &amp; Alat Permainan Edukatif (APE) Konseling</h4>
+                <p style="font-size:13px;color:#4B5563;line-height:1.5;margin:0 0 12px;">Pameran 45 karya media bimbingan kelompok interaktif hasil PPL MBKM mahasiswa di 15 SMA/SMK mitra Sulawesi Selatan.</p>
+                <div style="font-size:12px;color:#6B7280;">👥 Diikuti oleh 120 mahasiswa praktikan dan dihadiri kepala sekolah mitra.</div>
+            </div>
+
+            <div style="background:#ffffff;border:1px solid #D4E3D8;border-radius:16px;padding:22px;box-shadow:0 4px 15px rgba(0,0,0,0.03);">
+                <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                    <span style="font-size:11px;font-weight:700;background:#E8F0EA;color:#0D3B22;padding:3px 8px;border-radius:4px;">Tahun 2023</span>
+                    <span style="font-size:12px;color:#059669;font-weight:600;">Gedung Phinisi UNM</span>
+                </div>
+                <h4 style="font-size:16px;font-weight:700;color:#0D3B22;margin:0 0 8px;">Gelar Karya Inovasi Modul Konseling Sebaya &amp; Karir</h4>
+                <p style="font-size:13px;color:#4B5563;line-height:1.5;margin:0 0 12px;">Peluncuran e-modul bimbingan karir digital untuk siswa kelas XII serta demonstrasi simulasi konseling lintas budaya.</p>
+                <div style="font-size:12px;color:#6B7280;">👥 Disertai sesi talkshow interaktif bersama praktisi HRD industri.</div>
+            </div>
+
+            <div style="background:#ffffff;border:1px solid #D4E3D8;border-radius:16px;padding:22px;box-shadow:0 4px 15px rgba(0,0,0,0.03);">
+                <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                    <span style="font-size:11px;font-weight:700;background:#E8F0EA;color:#0D3B22;padding:3px 8px;border-radius:4px;">Tahun 2022</span>
+                    <span style="font-size:12px;color:#059669;font-weight:600;">Pelataran FIP UNM</span>
+                </div>
+                <h4 style="font-size:16px;font-weight:700;color:#0D3B22;margin:0 0 8px;">Pekan Layanan Konseling &amp; Asesmen Gratis Kampus Mengajar</h4>
+                <p style="font-size:13px;color:#4B5563;line-height:1.5;margin:0 0 12px;">Pemberian layanan asesmen minat bakat gratis bagi 250 siswa SMP/SMA binaan program Kampus Mengajar Angkatan 3 &amp; 4.</p>
+                <div style="font-size:12px;color:#6B7280;">👥 Dilaporkan sebagai eviden unggulan evaluasi mutu MBKM tingkat fakultas.</div>
+            </div>
+        </div>
+
+        <!-- Bagian 2: Proyek Kemanusiaan 2023 -->
+        <h3 style="font-family:'Fraunces',Georgia,serif;font-size:22px;color:#0D3B22;margin:0 0 18px;">
+            Proyek Kemanusiaan Mahasiswa BK (Tahun 2023)
+        </h3>
+        <div style="background:#FAF8F5;border:1.5px solid #D4E3D8;border-radius:18px;padding:26px;">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:24px;">
+                <div>
+                    <span style="background:#FEE2E2;color:#991B1B;font-size:11px;font-weight:700;padding:3px 10px;border-radius:6px;display:inline-block;margin-bottom:8px;">Program Unggulan Kemanusiaan 2023</span>
+                    <h4 style="font-size:18px;font-weight:700;color:#0D3B22;margin:0 0 10px;">Trauma Healing &amp; Psychological First Aid (PFA) Korban Banjir</h4>
+                    <p style="font-size:13.5px;color:#4B5563;line-height:1.6;margin:0 0 16px;">
+                        Tim Relawan Mahasiswa dan Dosen Pembimbing Bimbingan dan Konseling FIP UNM diterjunkan langsung dalam program pemulihan psikologis bagi anak-anak dan keluarga terdampak bencana banjir bandang di kawasan Makassar dan Maros pada awal 2023.
+                    </p>
+                    <ul style="font-size:13px;color:#374151;line-height:1.7;padding-left:18px;margin:0;">
+                        <li>Layanan konseling kelompok ekspresif melalui art therapy dan play therapy</li>
+                        <li>Penyaluran 150 paket edukasi anak ceria dan alat tulis sekolah</li>
+                        <li>Mitra pelaksana: Dinas Sosial Provinsi Sulawesi Selatan dan PMI Cabang Makassar</li>
+                    </ul>
+                </div>
+                <div style="background:#ffffff;border:1px solid #E5E7EB;border-radius:14px;padding:20px;">
+                    <h5 style="font-size:15px;font-weight:700;color:#0D3B22;margin:0 0 10px;">Capaian &amp; Dampak Program Kemanusiaan:</h5>
+                    <div style="display:flex;flex-direction:column;gap:10px;font-size:13px;color:#4B5563;">
+                        <div style="padding:10px;background:#F9FAFB;border-radius:8px;border-left:3px solid #0D3B22;">
+                            <strong style="color:#0D3B22;">215 Anak &amp; Remaja</strong> terlayani sesi trauma healing terbimbing.
+                        </div>
+                        <div style="padding:10px;background:#F9FAFB;border-radius:8px;border-left:3px solid #0D3B22;">
+                            <strong style="color:#0D3B22;">25 Mahasiswa BK</strong> memperoleh konversi 20 SKS mata kuliah MBKM Kemanusiaan.
+                        </div>
+                        <div style="padding:10px;background:#F9FAFB;border-radius:8px;border-left:3px solid #0D3B22;">
+                            <strong style="color:#0D3B22;">1 Buku Antologi</strong> "Jejak Empati di Garis Bencana" ber-ISBN terbitan UNM Press.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <?php
+    return ob_get_clean();
+}
+}
+add_shortcode('ppb_mbkm_kemanusiaan', 'ppb_shortcode_mbkm_kemanusiaan');
+

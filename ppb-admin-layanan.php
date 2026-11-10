@@ -449,3 +449,351 @@ function ppb_render_layanan_settings_page() {
     <?php
 }
 }
+
+/* ========================================================================== */
+/* 5. SHORTCODE: LAYANAN PERSURATAN MAHASISWA & FORMAT NOMOR SURAT RESMI      */
+/* ========================================================================== */
+if (!function_exists('ppb_shortcode_layanan_persuratan')) {
+function ppb_shortcode_layanan_persuratan($atts = []) {
+    ob_start();
+    ?>
+    <section class="ppb-persuratan-wrapper" style="font-family:'Poppins',sans-serif;color:#1F2937;margin:30px 0;">
+        
+        <!-- Header & Aturan Kode Nomor Surat Resmi -->
+        <div style="background:#0D3B22;color:#ffffff;border-radius:20px;padding:30px;margin-bottom:35px;box-shadow:0 10px 25px rgba(13,59,34,0.15);position:relative;overflow:hidden;">
+            <div style="position:relative;z-index:2;">
+                <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(245,184,46,0.2);color:#F5B82E;padding:4px 14px;border-radius:999px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px;border:1px solid rgba(245,184,46,0.35);">
+                    <span>Standar Tata Kelola Dokumen &amp; Persuratan</span>
+                </div>
+                <h2 style="font-family:'Fraunces',Georgia,serif;font-size:clamp(22px, 3vw, 30px);color:#ffffff;margin:0 0 10px;font-weight:600;">
+                    Layanan Persuratan &amp; Standar Format Nomor Surat Resmi
+                </h2>
+                <p style="color:rgba(255,255,255,0.85);font-size:14px;max-width:760px;margin:0 0 20px;line-height:1.6;">
+                    Setiap surat keterangan dan rekomendasi akademik yang diterbitkan oleh Program Studi Bimbingan dan Konseling / Jurusan PPB FIP UNM wajib mencantumkan kode klasifikasi arsip dan nomor registrasi surat resmi Universitas Negeri Makassar.
+                </p>
+
+                <!-- Box Kode Penomoran Resmi -->
+                <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:14px;padding:16px 20px;">
+                    <div style="font-size:12px;font-weight:700;color:#F5B82E;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;">
+                        Rumus Kode Penomoran Surat Resmi UNM:
+                    </div>
+                    <div style="font-family:monospace;font-size:clamp(13px, 2.5vw, 17px);color:#ffffff;font-weight:700;background:rgba(0,0,0,0.25);padding:10px 16px;border-radius:8px;border-left:4px solid #F5B82E;margin-bottom:8px;">
+                        B / [Nomor Urut Surat] / UN36.1 / [Kode Hal] / [Tahun Berjalan]
+                    </div>
+                    <div style="font-size:12px;color:rgba(255,255,255,0.8);display:flex;flex-wrap:wrap;gap:12px;line-height:1.4;">
+                        <span>&bull; <strong>UN36.1</strong>: Kode Fakultas Ilmu Pendidikan UNM</span>
+                        <span>&bull; <strong>PP</strong>: Pendidikan &amp; Pengajaran</span>
+                        <span>&bull; <strong>PT</strong>: Penelitian &amp; Riset</span>
+                        <span>&bull; <strong>KM</strong>: Kemahasiswaan &amp; Magang</span>
+                        <span>&bull; <strong>LL</strong>: Layanan Laboratorium</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Daftar Jenis Layanan Persuratan -->
+        <h3 style="font-family:'Fraunces',Georgia,serif;font-size:22px;color:#0D3B22;margin:0 0 20px;">
+            Katalog Dokumen &amp; Jenis Layanan Persuratan
+        </h3>
+        
+        <div style="display:grid;grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));gap:20px;margin-bottom:40px;">
+            
+            <!-- 1. Surat Keterangan Aktif Kuliah -->
+            <div style="background:#ffffff;border:1px solid #D4E3D8;border-radius:16px;padding:22px;box-shadow:0 4px 15px rgba(0,0,0,0.03);display:flex;flex-direction:column;justify-content:between;">
+                <div>
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+                        <span style="background:#E8F0EA;color:#0D3B22;font-size:11px;font-weight:700;padding:3px 10px;border-radius:6px;">Kode: PP</span>
+                        <span style="font-family:monospace;font-size:11px;color:#6B7280;">B/.../UN36.1/PP/2026</span>
+                    </div>
+                    <h4 style="font-size:17px;font-weight:700;color:#0D3B22;margin:0 0 8px;">Surat Keterangan Aktif Kuliah</h4>
+                    <p style="font-size:13px;color:#4B5563;line-height:1.5;margin:0 0 14px;">
+                        Dibutuhkan untuk pengurusan tunjangan gaji orang tua, BPJS Kesehatan, dan pengajuan beasiswa eksternal.
+                    </p>
+                    <div style="font-size:12px;background:#FAF8F5;padding:10px 12px;border-radius:8px;border:1px dashed #D4E3D8;margin-bottom:16px;">
+                        <strong style="color:#0D3B22;">Syarat Pengajuan:</strong>
+                        <ul style="margin:4px 0 0;padding-left:18px;color:#6B7280;line-height:1.5;">
+                            <li>KRS semester berjalan (sudah tervalidasi PA)</li>
+                            <li>KTM / Slip Pembayaran UKT terbaru</li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="display:flex;gap:8px;">
+                    <a href="https://bk-connect-fipunm.vercel.app/sipadu" target="_blank" rel="noopener" style="flex:1;text-align:center;background:#0D3B22;color:#ffffff;font-size:12.5px;font-weight:600;padding:9px 12px;border-radius:8px;text-decoration:none;">Ajukan Online &rarr;</a>
+                    <a href="#" style="background:#FAF8F5;color:#0D3B22;border:1px solid #D4E3D8;font-size:12px;font-weight:600;padding:9px 12px;border-radius:8px;text-decoration:none;">Template</a>
+                </div>
+            </div>
+
+            <!-- 2. Surat Izin Observasi / Penelitian -->
+            <div style="background:#ffffff;border:1px solid #D4E3D8;border-radius:16px;padding:22px;box-shadow:0 4px 15px rgba(0,0,0,0.03);display:flex;flex-direction:column;justify-content:between;">
+                <div>
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+                        <span style="background:#E8F0EA;color:#0D3B22;font-size:11px;font-weight:700;padding:3px 10px;border-radius:6px;">Kode: PT</span>
+                        <span style="font-family:monospace;font-size:11px;color:#6B7280;">B/.../UN36.1/PT/2026</span>
+                    </div>
+                    <h4 style="font-size:17px;font-weight:700;color:#0D3B22;margin:0 0 8px;">Surat Izin Penelitian &amp; Observasi Skripsi</h4>
+                    <p style="font-size:13px;color:#4B5563;line-height:1.5;margin:0 0 14px;">
+                        Surat permohonan izin riset atau pengambilan data di sekolah mitra, instansi, atau komunitas.
+                    </p>
+                    <div style="font-size:12px;background:#FAF8F5;padding:10px 12px;border-radius:8px;border:1px dashed #D4E3D8;margin-bottom:16px;">
+                        <strong style="color:#0D3B22;">Syarat Pengajuan:</strong>
+                        <ul style="margin:4px 0 0;padding-left:18px;color:#6B7280;line-height:1.5;">
+                            <li>Persetujuan Judul &amp; Tanda Tangan Pembimbing</li>
+                            <li>Identitas lengkap lokasi &amp; kepala sekolah sasaran</li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="display:flex;gap:8px;">
+                    <a href="https://bk-connect-fipunm.vercel.app/sipadu" target="_blank" rel="noopener" style="flex:1;text-align:center;background:#0D3B22;color:#ffffff;font-size:12.5px;font-weight:600;padding:9px 12px;border-radius:8px;text-decoration:none;">Ajukan Online &rarr;</a>
+                    <a href="#" style="background:#FAF8F5;color:#0D3B22;border:1px solid #D4E3D8;font-size:12px;font-weight:600;padding:9px 12px;border-radius:8px;text-decoration:none;">Template</a>
+                </div>
+            </div>
+
+            <!-- 3. Surat Pengantar Magang / MBKM -->
+            <div style="background:#ffffff;border:1px solid #D4E3D8;border-radius:16px;padding:22px;box-shadow:0 4px 15px rgba(0,0,0,0.03);display:flex;flex-direction:column;justify-content:between;">
+                <div>
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+                        <span style="background:#E8F0EA;color:#0D3B22;font-size:11px;font-weight:700;padding:3px 10px;border-radius:6px;">Kode: KM</span>
+                        <span style="font-family:monospace;font-size:11px;color:#6B7280;">B/.../UN36.1/KM/2026</span>
+                    </div>
+                    <h4 style="font-size:17px;font-weight:700;color:#0D3B22;margin:0 0 8px;">Surat Pengantar Magang / MBKM</h4>
+                    <p style="font-size:13px;color:#4B5563;line-height:1.5;margin:0 0 14px;">
+                        Pengantar resmi pelaksanaan Praktik Pengalaman Lapangan (PPL), Magang Industri, atau Kampus Mengajar.
+                    </p>
+                    <div style="font-size:12px;background:#FAF8F5;padding:10px 12px;border-radius:8px;border:1px dashed #D4E3D8;margin-bottom:16px;">
+                        <strong style="color:#0D3B22;">Syarat Pengajuan:</strong>
+                        <ul style="margin:4px 0 0;padding-left:18px;color:#6B7280;line-height:1.5;">
+                            <li>Surat Penerimaan dari Mitra / LoA MBKM</li>
+                            <li>Konfirmasi Dosen Pembimbing Lapangan (DPL)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="display:flex;gap:8px;">
+                    <a href="https://bk-connect-fipunm.vercel.app/sipadu" target="_blank" rel="noopener" style="flex:1;text-align:center;background:#0D3B22;color:#ffffff;font-size:12.5px;font-weight:600;padding:9px 12px;border-radius:8px;text-decoration:none;">Ajukan Online &rarr;</a>
+                    <a href="#" style="background:#FAF8F5;color:#0D3B22;border:1px solid #D4E3D8;font-size:12px;font-weight:600;padding:9px 12px;border-radius:8px;text-decoration:none;">Template</a>
+                </div>
+            </div>
+
+            <!-- 4. Surat Keterangan Bebas Laboratorium -->
+            <div style="background:#ffffff;border:1px solid #D4E3D8;border-radius:16px;padding:22px;box-shadow:0 4px 15px rgba(0,0,0,0.03);display:flex;flex-direction:column;justify-content:between;">
+                <div>
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+                        <span style="background:#E8F0EA;color:#0D3B22;font-size:11px;font-weight:700;padding:3px 10px;border-radius:6px;">Kode: LL</span>
+                        <span style="font-family:monospace;font-size:11px;color:#6B7280;">B/.../UN36.1.7/LL/2026</span>
+                    </div>
+                    <h4 style="font-size:17px;font-weight:700;color:#0D3B22;margin:0 0 8px;">Surat Bebas Laboratorium &amp; Inventaris</h4>
+                    <p style="font-size:13px;color:#4B5563;line-height:1.5;margin:0 0 14px;">
+                        Syarat wajib yudisium dan bebas pinjaman instrumen tes psikologi/alat asesmen laboratorium BK.
+                    </p>
+                    <div style="font-size:12px;background:#FAF8F5;padding:10px 12px;border-radius:8px;border:1px dashed #D4E3D8;margin-bottom:16px;">
+                        <strong style="color:#0D3B22;">Syarat Pengajuan:</strong>
+                        <ul style="margin:4px 0 0;padding-left:18px;color:#6B7280;line-height:1.5;">
+                            <li>Verifikasi status pengembalian alat oleh Pranata Lab</li>
+                            <li>Bebas tanggungan modul dan instrumen konseling</li>
+                        </ul>
+                    </div>
+                </div>
+                <div style="display:flex;gap:8px;">
+                    <a href="<?php echo esc_url(home_url('/lab-bk/inventaris/')); ?>" style="flex:1;text-align:center;background:#0D3B22;color:#ffffff;font-size:12.5px;font-weight:600;padding:9px 12px;border-radius:8px;text-decoration:none;">Cek Inventaris &rarr;</a>
+                    <a href="#" style="background:#FAF8F5;color:#0D3B22;border:1px solid #D4E3D8;font-size:12px;font-weight:600;padding:9px 12px;border-radius:8px;text-decoration:none;">Template</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Alur 3 Langkah Pengajuan Persuratan -->
+        <div style="background:#F0F6F2;border:1.5px solid #D4E3D8;border-radius:18px;padding:26px;">
+            <h4 style="font-family:'Fraunces',Georgia,serif;font-size:18px;color:#0D3B22;margin:0 0 16px;">
+                Alur Pengajuan &amp; Validasi Nomor Surat Resmi (3 Langkah)
+            </h4>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:20px;">
+                <div style="background:#ffffff;padding:18px;border-radius:12px;border:1px solid #E2E8F0;">
+                    <span style="font-weight:800;color:#F5B82E;font-size:24px;display:block;line-height:1;margin-bottom:8px;">01</span>
+                    <strong style="font-size:14px;color:#0D3B22;display:block;margin-bottom:4px;">Pengisian Formulir Online</strong>
+                    <p style="font-size:12.5px;color:#6B7280;margin:0;line-height:1.5;">Mahasiswa mengisi formulir di portal persuratan dengan melampirkan berkas persyaratan.</p>
+                </div>
+                <div style="background:#ffffff;padding:18px;border-radius:12px;border:1px solid #E2E8F0;">
+                    <span style="font-weight:800;color:#F5B82E;font-size:24px;display:block;line-height:1;margin-bottom:8px;">02</span>
+                    <strong style="font-size:14px;color:#0D3B22;display:block;margin-bottom:4px;">Penomoran Resmi Prodi</strong>
+                    <p style="font-size:12.5px;color:#6B7280;margin:0;line-height:1.5;">Staf Tata Usaha memverifikasi syarat dan menerbitkan nomor surat resmi sesuai buku registrasi.</p>
+                </div>
+                <div style="background:#ffffff;padding:18px;border-radius:12px;border:1px solid #E2E8F0;">
+                    <span style="font-weight:800;color:#F5B82E;font-size:24px;display:block;line-height:1;margin-bottom:8px;">03</span>
+                    <strong style="font-size:14px;color:#0D3B22;display:block;margin-bottom:4px;">Tanda Tangan &amp; Unduh Surat</strong>
+                    <p style="font-size:12.5px;color:#6B7280;margin:0;line-height:1.5;">Surat ditandatangani Ketua Jurusan/Dekan (TTE) dan dikirimkan langsung ke email mahasiswa.</p>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <?php
+    return ob_get_clean();
+}
+}
+add_shortcode('ppb_layanan_persuratan', 'ppb_shortcode_layanan_persuratan');
+
+/* ========================================================================== */
+/* 6. SHORTCODE: MODUL LABORATORIUM BK (KEGIATAN, LOMBA, & TAUTAN PORTAL)     */
+/* ========================================================================== */
+if (!function_exists('ppb_shortcode_lab_portals')) {
+function ppb_shortcode_lab_portals($atts = []) {
+    ob_start();
+    ?>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:20px;margin:30px 0;">
+        
+        <!-- Portal 1: BK Connect -->
+        <div style="background:linear-gradient(135deg, #0D3B22 0%, #155734 100%);color:#ffffff;border-radius:18px;padding:24px;box-shadow:0 8px 24px rgba(13,59,34,0.15);position:relative;">
+            <div style="display:inline-block;background:rgba(245,184,46,0.2);color:#F5B82E;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;text-transform:uppercase;margin-bottom:10px;">Portal Digital</div>
+            <h3 style="font-family:'Fraunces',Georgia,serif;font-size:20px;color:#ffffff;margin:0 0 6px;">BK Connect Suite</h3>
+            <p style="font-size:13px;color:rgba(255,255,255,0.8);line-height:1.5;margin:0 0 18px;">
+                Sistem informasi terintegrasi untuk asesmen psikologis digital, bimbingan akademik, dan manajemen konseling mahasiswa.
+            </p>
+            <a href="https://bk-connect-fipunm.vercel.app/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:#F5B82E;color:#0D3B22;font-size:13px;font-weight:700;padding:10px 18px;border-radius:10px;text-decoration:none;">
+                <span>Masuk BK Connect</span> &rarr;
+            </a>
+        </div>
+
+        <!-- Portal 2: Peer Support Network -->
+        <div style="background:linear-gradient(135deg, #1E3A8A 0%, #2563EB 100%);color:#ffffff;border-radius:18px;padding:24px;box-shadow:0 8px 24px rgba(30,58,138,0.15);position:relative;">
+            <div style="display:inline-block;background:rgba(255,255,255,0.2);color:#ffffff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;text-transform:uppercase;margin-bottom:10px;">Konseling Sebaya</div>
+            <h3 style="font-family:'Fraunces',Georgia,serif;font-size:20px;color:#ffffff;margin:0 0 6px;">Peersupport BK UNM</h3>
+            <p style="font-size:13px;color:rgba(255,255,255,0.8);line-height:1.5;margin:0 0 18px;">
+                Ruang aman konseling sebaya mahasiswa BK UNM untuk konsultasi kesehatan mental, adaptasi kampus, dan persahabatan positif.
+            </p>
+            <a href="https://peersupport-bk.unm.ac.id/" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:#ffffff;color:#1E3A8A;font-size:13px;font-weight:700;padding:10px 18px;border-radius:10px;text-decoration:none;">
+                <span>Akses Peersupport</span> &rarr;
+            </a>
+        </div>
+
+        <!-- Portal 3: Web Laboratorium BK -->
+        <div style="background:linear-gradient(135deg, #7C2D12 0%, #B45309 100%);color:#ffffff;border-radius:18px;padding:24px;box-shadow:0 8px 24px rgba(124,45,18,0.15);position:relative;">
+            <div style="display:inline-block;background:rgba(255,255,255,0.2);color:#ffffff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;text-transform:uppercase;margin-bottom:10px;">Sub-Portal Lab</div>
+            <h3 style="font-family:'Fraunces',Georgia,serif;font-size:20px;color:#ffffff;margin:0 0 6px;">Web Lab BK &amp; Alat</h3>
+            <p style="font-size:13px;color:rgba(255,255,255,0.8);line-height:1.5;margin:0 0 18px;">
+                Katalog digital alat tes psikologi, jadwal pemakaian ruang konseling individual/kelompok, dan panduan praktikum.
+            </p>
+            <a href="<?php echo esc_url(home_url('/lab-bk/inventaris/')); ?>" style="display:inline-flex;align-items:center;gap:6px;background:#ffffff;color:#7C2D12;font-size:13px;font-weight:700;padding:10px 18px;border-radius:10px;text-decoration:none;">
+                <span>Cek Inventaris Lab</span> &rarr;
+            </a>
+        </div>
+
+    </div>
+    <?php
+    return ob_get_clean();
+}
+}
+add_shortcode('ppb_lab_portals', 'ppb_shortcode_lab_portals');
+
+if (!function_exists('ppb_shortcode_lab_kegiatan')) {
+function ppb_shortcode_lab_kegiatan($atts = []) {
+    ob_start();
+    $kegiatan = [
+        [
+            'judul' => 'Praktikum Micro-Counseling & Simulasi Konseling Individual',
+            'periode' => 'Semester Gasal & Genap 2024/2025',
+            'deskripsi' => 'Pelatihan intensif keterampilan dasar komunikasi konseling, attending, empathy, dan teknik intervensi kognitif-behavioral di ruang one-way mirror Lab BK.',
+            'peserta' => 'Mahasiswa Angkatan 2022 & 2023',
+            'status' => 'Rutin Berkelanjutan'
+        ],
+        [
+            'judul' => 'Workshop Administrasi & Skoring Tes Psikologi Terstandar',
+            'periode' => 'Oktober – November 2024',
+            'deskripsi' => 'Pelatihan penggunaan instrumen tes bakat, minat, inteligensi (DAT, RMIB, IST) serta tes inventori kepribadian untuk asesmen BK sekolah.',
+            'peserta' => '65 Mahasiswa Lab BK',
+            'status' => 'Selesai Dilaksanakan'
+        ],
+        [
+            'judul' => 'Program Duta Peer Counselor & Sahabat Sebaya Kampus',
+            'periode' => 'Maret – Juni 2024',
+            'deskripsi' => 'Kaderisasi mahasiswa konselor sebaya untuk memberikan pertolongan pertama psikologis (Psychological First Aid) bagi civitas akademika UNM.',
+            'peserta' => '40 Mahasiswa Peer Counselor',
+            'status' => 'Aktif Berjalan'
+        ],
+        [
+            'judul' => 'Pengembangan Media BK Digital & Virtual Reality Therapy',
+            'periode' => 'Agustus 2024',
+            'deskripsi' => 'Eksperimen inovasi pemanfaatan media interaktif dan simulasi relaksasi berbasis teknologi digital di Laboratorium BK FIP UNM.',
+            'peserta' => 'Tim Pengembang Lab BK',
+            'status' => 'Tahap Uji Coba'
+        ]
+    ];
+    ?>
+    <div style="margin:25px 0;">
+        <h3 style="font-family:'Fraunces',Georgia,serif;font-size:22px;color:#0D3B22;margin:0 0 16px;">
+            Kegiatan &amp; Praktikum Mahasiswa Laboratorium BK
+        </h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));gap:20px;">
+            <?php foreach ($kegiatan as $kg) : ?>
+                <div style="background:#ffffff;border:1px solid #D4E3D8;border-radius:16px;padding:22px;box-shadow:0 4px 15px rgba(0,0,0,0.03);">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                        <span style="font-size:11px;font-weight:700;background:#E8F0EA;color:#0D3B22;padding:3px 10px;border-radius:6px;"><?php echo esc_html($kg['status']); ?></span>
+                        <span style="font-size:12px;color:#6B7280;font-weight:500;"><?php echo esc_html($kg['periode']); ?></span>
+                    </div>
+                    <h4 style="font-size:16px;font-weight:700;color:#0D3B22;margin:0 0 8px;line-height:1.4;"><?php echo esc_html($kg['judul']); ?></h4>
+                    <p style="font-size:13px;color:#4B5563;line-height:1.6;margin:0 0 12px;"><?php echo esc_html($kg['deskripsi']); ?></p>
+                    <div style="font-size:12px;color:#0D3B22;font-weight:600;display:flex;align-items:center;gap:6px;">
+                        <span>👥 Sasaran: <?php echo esc_html($kg['peserta']); ?></span>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+}
+add_shortcode('ppb_lab_kegiatan', 'ppb_shortcode_lab_kegiatan');
+
+if (!function_exists('ppb_shortcode_lab_lomba')) {
+function ppb_shortcode_lab_lomba($atts = []) {
+    ob_start();
+    $lomba = [
+        [
+            'nama' => 'Lomba Media Bimbingan dan Konseling Nasional (LMBKN) 2024',
+            'penyelenggara' => 'Laboratorium BK &amp; Himpunan Mahasiswa BK FIP UNM',
+            'kategori' => 'Tingkat Nasional',
+            'prestasi' => 'Penyelenggara &amp; Juara 1 Kategori Media Interaktif Digital',
+            'lingkup' => 'Non-Akademik / Kreativitas Inovatif'
+        ],
+        [
+            'nama' => 'Kompetisi Video Simulasi Konseling Kreatif 2023',
+            'penyelenggara' => 'Asosiasi Bimbingan dan Konseling Indonesia (ABKIN)',
+            'kategori' => 'Tingkat Nasional',
+            'prestasi' => 'Juara 2 Kategori Simulasi Konseling Kelompok',
+            'lingkup' => 'Keterampilan Konseling Terapan'
+        ],
+        [
+            'nama' => 'Festival Cipta Puisi &amp; Poster Edukasi Mental Health 2024',
+            'penyelenggara' => 'Laboratorium BK FIP UNM',
+            'kategori' => 'Tingkat Universitas / Regional',
+            'prestasi' => 'Penyelenggara &amp; Publikasi 50 Karya Terbaik',
+            'lingkup' => 'Seni &amp; Promosi Kesehatan Mental'
+        ]
+    ];
+    ?>
+    <div style="margin:25px 0;">
+        <h3 style="font-family:'Fraunces',Georgia,serif;font-size:22px;color:#0D3B22;margin:0 0 16px;">
+            Informasi Lomba Non-Akademik Mahasiswa Lab BK
+        </h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));gap:20px;">
+            <?php foreach ($lomba as $lb) : ?>
+                <div style="background:#ffffff;border:1px solid #D4E3D8;border-radius:16px;padding:22px;box-shadow:0 4px 15px rgba(0,0,0,0.03);">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                        <span style="font-size:11px;font-weight:700;background:#FEF3C7;color:#92400E;padding:3px 10px;border-radius:6px;"><?php echo esc_html($lb['kategori']); ?></span>
+                        <span style="font-size:11px;color:#6B7280;"><?php echo esc_html($lb['lingkup']); ?></span>
+                    </div>
+                    <h4 style="font-size:16px;font-weight:700;color:#0D3B22;margin:0 0 8px;line-height:1.4;"><?php echo esc_html($lb['nama']); ?></h4>
+                    <p style="font-size:12.5px;color:#4B5563;margin:0 0 10px;">
+                        <strong>Penyelenggara:</strong> <?php echo wp_kses_post($lb['penyelenggara']); ?>
+                    </p>
+                    <div style="font-size:12.5px;background:#FAF8F5;border:1px solid #E2E8F0;padding:8px 12px;border-radius:8px;color:#0D3B22;font-weight:600;">
+                        🏆 Capaian: <?php echo esc_html($lb['prestasi']); ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+}
+add_shortcode('ppb_lab_lomba', 'ppb_shortcode_lab_lomba');

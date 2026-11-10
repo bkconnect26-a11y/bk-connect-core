@@ -1123,3 +1123,542 @@ function ppb_shortcode_jadwal_ujian_list() {
 }
 }
 add_shortcode('ppb_jadwal_ujian_list', 'ppb_shortcode_jadwal_ujian_list');
+
+/* ========================================================================== */
+/* 8. SHORTCODE: KURIKULUM OBE, DAFTAR MK, RPS LENGKAP & RUBRIK PENILAIAN    */
+/* ========================================================================== */
+if (!function_exists('ppb_shortcode_kurikulum_rps_sap')) {
+function ppb_shortcode_kurikulum_rps_sap($atts = []) {
+    ob_start();
+    ?>
+    <section class="ppb-kurikulum-suite" style="font-family:'Poppins',sans-serif;color:#1F2937;margin:30px 0;">
+        
+        <!-- Tab Navigation Bar -->
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:25px;border-bottom:2px solid #E5E7EB;padding-bottom:12px;">
+            <button type="button" class="ppb-cur-tab-btn is-active" data-tab="tab-mk" style="padding:10px 20px;border-radius:10px;border:none;background:#0D3B22;color:#ffffff;font-size:13.5px;font-weight:700;cursor:pointer;transition:all 0.2s;">
+                📚 Struktur Mata Kuliah (Sem 1–8)
+            </button>
+            <button type="button" class="ppb-cur-tab-btn" data-tab="tab-rps" style="padding:10px 20px;border-radius:10px;border:1px solid #D1D5DB;background:#ffffff;color:#374151;font-size:13.5px;font-weight:600;cursor:pointer;transition:all 0.2s;">
+                📑 Repositori RPS Lengkap
+            </button>
+            <button type="button" class="ppb-cur-tab-btn" data-tab="tab-sap" style="padding:10px 20px;border-radius:10px;border:1px solid #D1D5DB;background:#ffffff;color:#374151;font-size:13.5px;font-weight:600;cursor:pointer;transition:all 0.2s;">
+                🗓️ SAP (Satuan Acara Perkuliahan)
+            </button>
+            <button type="button" class="ppb-cur-tab-btn" data-tab="tab-rubrik" style="padding:10px 20px;border-radius:10px;border:1px solid #D1D5DB;background:#ffffff;color:#374151;font-size:13.5px;font-weight:600;cursor:pointer;transition:all 0.2s;">
+                ⚖️ Rubrik Penilaian OBE
+            </button>
+        </div>
+
+        <!-- Tab 1: Struktur Mata Kuliah per Semester -->
+        <div id="tab-mk" class="ppb-cur-pane" style="display:block;">
+            <div style="background:#FAF8F5;border:1px solid #D4E3D8;border-radius:16px;padding:24px;margin-bottom:25px;">
+                <h3 style="font-family:'Fraunces',Georgia,serif;font-size:20px;color:#0D3B22;margin:0 0 8px;">
+                    Daftar Mata Kuliah Kurikulum OBE 2025 (144 SKS)
+                </h3>
+                <p style="font-size:13px;color:#4B5563;margin:0;line-height:1.6;">
+                    Kurikulum Program Studi Bimbingan dan Konseling FIP UNM mengacu pada Kerangka Kualifikasi Nasional Indonesia (KKNI Level 6) dan Standar Asosiasi Bimbingan dan Konseling Indonesia (ABKIN).
+                </p>
+            </div>
+
+            <?php
+            $semesters = [
+                1 => [
+                    ['kode' => 'UNM101', 'nama' => 'Pendidikan Pancasila & Kewarganegaraan', 'sks' => 2, 'jenis' => 'Wajib Universitas'],
+                    ['kode' => 'FIP102', 'nama' => 'Pengantar Ilmu Pendidikan', 'sks' => 3, 'jenis' => 'Wajib Fakultas'],
+                    ['kode' => 'BK101', 'nama' => 'Dasar-Dasar Bimbingan dan Konseling', 'sks' => 3, 'jenis' => 'Wajib Prodi'],
+                    ['kode' => 'BK102', 'nama' => 'Psikologi Umum & Perkembangan Individu', 'sks' => 3, 'jenis' => 'Wajib Prodi'],
+                    ['kode' => 'BK103', 'nama' => 'Filsafat Pendidikan & Antropologi Budaya', 'sks' => 2, 'jenis' => 'Wajib Prodi'],
+                    ['kode' => 'BK104', 'nama' => 'Komunikasi Antarpribadi dalam Konseling', 'sks' => 3, 'jenis' => 'Wajib Prodi'],
+                    ['kode' => 'UNM102', 'nama' => 'Bahasa Indonesia Keilmuan', 'sks' => 2, 'jenis' => 'Wajib Universitas'],
+                ],
+                2 => [
+                    ['kode' => 'BK201', 'nama' => 'Teori-Teori Kepribadian', 'sks' => 3, 'jenis' => 'Wajib Prodi'],
+                    ['kode' => 'BK202', 'nama' => 'Pemahaman Individu Teknik Non-Tes', 'sks' => 3, 'jenis' => 'Wajib Prodi / Praktik'],
+                    ['kode' => 'BK203', 'nama' => 'Keterampilan Dasar Konseling (Attending & Empathy)', 'sks' => 3, 'jenis' => 'Wajib Prodi / Praktik'],
+                    ['kode' => 'BK204', 'nama' => 'Profesi Bimbingan dan Konseling & Etika Konselor', 'sks' => 2, 'jenis' => 'Wajib Prodi'],
+                    ['kode' => 'BK205', 'nama' => 'Statistika Deskriptif untuk Pendidikan', 'sks' => 3, 'jenis' => 'Wajib Prodi'],
+                    ['kode' => 'FIP201', 'nama' => 'Perkembangan Belajar Peserta Didik', 'sks' => 2, 'jenis' => 'Wajib Fakultas'],
+                    ['kode' => 'UNM201', 'nama' => 'Bahasa Inggris Akademik & Konseling', 'sks' => 2, 'jenis' => 'Wajib Universitas'],
+                ],
+                3 => [
+                    ['kode' => 'BK301', 'nama' => 'Teori & Pendekatan Konseling Individual', 'sks' => 3, 'jenis' => 'Wajib Prodi'],
+                    ['kode' => 'BK302', 'nama' => 'Pemahaman Individu Teknik Tes (Asesmen Psikologi)', 'sks' => 3, 'jenis' => 'Wajib Prodi / Lab'],
+                    ['kode' => 'BK303', 'nama' => 'Dinamika Kelompok & Bimbingan Kelompok', 'sks' => 3, 'jenis' => 'Wajib Prodi / Praktik'],
+                    ['kode' => 'BK304', 'nama' => 'Pengembangan Program BK Komprehensif di Sekolah', 'sks' => 3, 'jenis' => 'Wajib Prodi'],
+                    ['kode' => 'BK305', 'nama' => 'Statistika Inferensial untuk Riset Pendidikan', 'sks' => 3, 'jenis' => 'Wajib Prodi'],
+                    ['kode' => 'BK306', 'nama' => 'Kesehatan Mental & Pertolongan Pertama Psikologis', 'sks' => 3, 'jenis' => 'Wajib Prodi'],
+                ],
+                4 => [
+                    ['kode' => 'BK401', 'nama' => 'Praktikum Konseling Individual (Micro-Counseling)', 'sks' => 3, 'jenis' => 'Wajib Prodi / Lab'],
+                    ['kode' => 'BK402', 'nama' => 'Konseling Kelompok & Intervensi Psikososial', 'sks' => 3, 'jenis' => 'Wajib Prodi / Lab'],
+                    ['kode' => 'BK403', 'nama' => 'Bimbingan dan Konseling Karir Komprehensif', 'sks' => 3, 'jenis' => 'Wajib Prodi'],
+                    ['kode' => 'BK404', 'nama' => 'Media & Teknologi Informasi dalam BK', 'sks' => 3, 'jenis' => 'Wajib Prodi'],
+                    ['kode' => 'BK405', 'nama' => 'Metodologi Penelitian Bimbingan dan Konseling', 'sks' => 3, 'jenis' => 'Wajib Prodi'],
+                    ['kode' => 'BK406', 'nama' => 'Konseling Lintas Budaya & Nilai-Nilai Kearifan Lokal', 'sks' => 2, 'jenis' => 'Wajib Prodi'],
+                    ['kode' => 'BK407', 'nama' => 'Pendidikan Inklusi & Kebutuhan Khusus', 'sks' => 2, 'jenis' => 'Wajib Prodi'],
+                ],
+                5 => [
+                    ['kode' => 'BK501', 'nama' => 'Konseling Keluarga & Pengasuhan Anak', 'sks' => 3, 'jenis' => 'Wajib Prodi'],
+                    ['kode' => 'BK502', 'nama' => 'Manajemen & Organisasi Layanan BK', 'sks' => 2, 'jenis' => 'Wajib Prodi'],
+                    ['kode' => 'BK503', 'nama' => 'Evaluasi & Akuntabilitas Program BK', 'sks' => 3, 'jenis' => 'Wajib Prodi'],
+                    ['kode' => 'BK504', 'nama' => 'Praktikum Asesmen & Diagnostik Kesulitan Belajar', 'sks' => 3, 'jenis' => 'Wajib Prodi / Lab'],
+                    ['kode' => 'BK505', 'nama' => 'Konseling Krisis, Trauma & Bencana', 'sks' => 3, 'jenis' => 'Pilihan Keahlian'],
+                    ['kode' => 'BK506', 'nama' => 'Kewirausahaan Layanan Konseling & Edukasi', 'sks' => 2, 'jenis' => 'Wajib Universitas'],
+                    ['kode' => 'BK507', 'nama' => 'Pencegahan & Penanganan Kekerasan di Sekolah', 'sks' => 2, 'jenis' => 'Pilihan Keahlian'],
+                ],
+                6 => [
+                    ['kode' => 'BK601', 'nama' => 'Praktik Lapangan BK Persekolahan (PPL/Magang I)', 'sks' => 4, 'jenis' => 'Wajib Lapangan / MBKM'],
+                    ['kode' => 'BK602', 'nama' => 'Seminar Proposal Penelitian Skripsi BK', 'sks' => 2, 'jenis' => 'Wajib Prodi'],
+                    ['kode' => 'BK603', 'nama' => 'Konseling Komunitas & Pemberdayaan Sosial', 'sks' => 3, 'jenis' => 'Pilihan Keahlian'],
+                    ['kode' => 'BK604', 'nama' => 'Studi Kasus Klinis & Supervisi Konseling', 'sks' => 3, 'jenis' => 'Wajib Prodi / Lab'],
+                    ['kode' => 'BK605', 'nama' => 'Teknologi Asesmen Digital & BK Connect', 'sks' => 2, 'jenis' => 'Pilihan Keahlian'],
+                    ['kode' => 'BK606', 'nama' => 'Publikasi Ilmiah & Penulisan Artikel Jurnal', 'sks' => 2, 'jenis' => 'Wajib Prodi'],
+                ],
+                7 => [
+                    ['kode' => 'BK701', 'nama' => 'Praktik Kerja Lapangan MBKM / PPL Terpadu II', 'sks' => 6, 'jenis' => 'Wajib Lapangan / MBKM'],
+                    ['kode' => 'BK702', 'nama' => 'Proyek Kemanusiaan & Pengabdian Masyarakat', 'sks' => 4, 'jenis' => 'Pilihan MBKM'],
+                    ['kode' => 'BK703', 'nama' => 'Kapita Selekta Bimbingan dan Konseling Kontemporer', 'sks' => 2, 'jenis' => 'Wajib Prodi'],
+                    ['kode' => 'UNM701', 'nama' => 'Kuliah Kerja Nyata (KKN) Tematik / Reguler', 'sks' => 4, 'jenis' => 'Wajib Universitas'],
+                ],
+                8 => [
+                    ['kode' => 'BK801', 'nama' => 'Skripsi / Tugas Akhir Karya Ilmiah', 'sks' => 6, 'jenis' => 'Wajib Kelulusan'],
+                    ['kode' => 'BK802', 'nama' => 'Ujian Komprehensif Keahlian Konseling', 'sks' => 0, 'jenis' => 'Prasyarat Yudisium'],
+                ]
+            ];
+            ?>
+
+            <div style="display:flex;flex-direction:column;gap:18px;">
+                <?php foreach ($semesters as $sem => $mks) : 
+                    $total_sks = array_sum(array_column($mks, 'sks'));
+                ?>
+                    <div style="background:#ffffff;border:1px solid #E5E7EB;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.03);">
+                        <div style="background:#0D3B22;color:#ffffff;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;">
+                            <strong style="font-size:14px;letter-spacing:0.02em;">Semester <?php echo $sem; ?></strong>
+                            <span style="font-size:12px;background:rgba(245,184,46,0.25);color:#F5B82E;padding:2px 10px;border-radius:6px;font-weight:700;">Total: <?php echo $total_sks; ?> SKS</span>
+                        </div>
+                        <div style="overflow-x:auto;">
+                            <table style="width:100%;border-collapse:collapse;font-size:13px;text-align:left;">
+                                <thead>
+                                    <tr style="background:#F9FAFB;border-bottom:1px solid #E5E7EB;color:#6B7280;font-size:11.5px;text-transform:uppercase;">
+                                        <th style="padding:10px 16px;">Kode MK</th>
+                                        <th style="padding:10px 16px;">Nama Mata Kuliah</th>
+                                        <th style="padding:10px 16px;text-align:center;">Bobot SKS</th>
+                                        <th style="padding:10px 16px;">Kelompok / Sifat</th>
+                                        <th style="padding:10px 16px;text-align:center;">Dokumen</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($mks as $mk) : ?>
+                                        <tr style="border-bottom:1px solid #F3F4F6;">
+                                            <td style="padding:10px 16px;font-family:monospace;font-weight:700;color:#0D3B22;"><?php echo esc_html($mk['kode']); ?></td>
+                                            <td style="padding:10px 16px;font-weight:600;color:#1F2937;"><?php echo esc_html($mk['nama']); ?></td>
+                                            <td style="padding:10px 16px;text-align:center;font-weight:700;color:#0D3B22;"><?php echo (int)$mk['sks']; ?></td>
+                                            <td style="padding:10px 16px;color:#4B5563;font-size:12px;"><?php echo esc_html($mk['jenis']); ?></td>
+                                            <td style="padding:10px 16px;text-align:center;">
+                                                <a href="#tab-rps" onclick="window.ppbSwitchCurTab('tab-rps')" style="font-size:11px;font-weight:700;color:#0D3B22;background:#E8F0EA;padding:3px 8px;border-radius:4px;text-decoration:none;">RPS/SAP &rarr;</a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+        <!-- Tab 2: Repositori RPS Lengkap -->
+        <div id="tab-rps" class="ppb-cur-pane" style="display:none;">
+            <div style="background:#FAF8F5;border:1px solid #D4E3D8;border-radius:16px;padding:24px;margin-bottom:25px;">
+                <h3 style="font-family:'Fraunces',Georgia,serif;font-size:20px;color:#0D3B22;margin:0 0 8px;">
+                    Rencana Pembelajaran Semester (RPS) Terstandar OBE
+                </h3>
+                <p style="font-size:13px;color:#4B5563;margin:0;line-height:1.6;">
+                    Dokumen RPS memuat Capaian Pembelajaran Lulusan (CPL), Capaian Pembelajaran Mata Kuliah (CPMK), deskripsi bahan kajian, metode perkuliahan partisipatif/case-method/team-based project, dan sistem penilaian.
+                </p>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));gap:18px;">
+                <?php
+                $rps_list = [
+                    ['kode' => 'BK101', 'nama' => 'Dasar-Dasar Bimbingan dan Konseling', 'dosen' => 'Dr. Farida Aryani, M.Pd. / Tim', 'rev' => 'Revisi 2024'],
+                    ['kode' => 'BK203', 'nama' => 'Keterampilan Dasar Konseling', 'dosen' => 'Prof. Dr. H. Alimuddin Mahmud, M.Pd.', 'rev' => 'Revisi 2024'],
+                    ['kode' => 'BK301', 'nama' => 'Teori & Pendekatan Konseling Individual', 'dosen' => 'Dr. Abdullah Pandang, M.Pd.', 'rev' => 'Revisi 2024'],
+                    ['kode' => 'BK302', 'nama' => 'Asesmen Psikologi & Pemahaman Individu', 'dosen' => 'Dra. Hj. Sitti Halimah, M.Pd.', 'rev' => 'Revisi 2024'],
+                    ['kode' => 'BK401', 'nama' => 'Praktikum Micro-Counseling', 'dosen' => 'Pakar & Tim Laboratorium BK', 'rev' => 'Revisi 2024'],
+                    ['kode' => 'BK403', 'nama' => 'Bimbingan dan Konseling Karir Komprehensif', 'dosen' => 'Dr. H. Sulaiman, M.Pd.', 'rev' => 'Revisi 2024'],
+                    ['kode' => 'BK405', 'nama' => 'Metodologi Penelitian BK & Skripsi', 'dosen' => 'Prof. Dr. Syamsul Bachri Thalib, M.Si.', 'rev' => 'Revisi 2024'],
+                    ['kode' => 'BK501', 'nama' => 'Konseling Keluarga & Krisis Psikososial', 'dosen' => 'Dr. Muhammad Anas, M.Si.', 'rev' => 'Revisi 2024']
+                ];
+                foreach ($rps_list as $r) : ?>
+                    <div style="background:#ffffff;border:1px solid #D4E3D8;border-radius:14px;padding:20px;box-shadow:0 3px 10px rgba(0,0,0,0.03);display:flex;flex-direction:column;justify-content:space-between;">
+                        <div>
+                            <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                                <span style="font-family:monospace;font-size:11px;font-weight:700;color:#0D3B22;background:#E8F0EA;padding:2px 8px;border-radius:4px;"><?php echo esc_html($r['kode']); ?></span>
+                                <span style="font-size:11px;color:#059669;font-weight:600;"><?php echo esc_html($r['rev']); ?></span>
+                            </div>
+                            <h4 style="font-size:15px;font-weight:700;color:#0D3B22;margin:0 0 6px;line-height:1.4;"><?php echo esc_html($r['nama']); ?></h4>
+                            <p style="font-size:12px;color:#6B7280;margin:0 0 14px;">Koordinator: <?php echo esc_html($r['dosen']); ?></p>
+                        </div>
+                        <div style="display:flex;gap:8px;">
+                            <a href="#" style="flex:1;text-align:center;background:#0D3B22;color:#ffffff;font-size:12px;font-weight:600;padding:8px 12px;border-radius:8px;text-decoration:none;">📄 Unduh RPS PDF</a>
+                            <a href="#" style="background:#FAF8F5;color:#0D3B22;border:1px solid #D4E3D8;font-size:12px;font-weight:600;padding:8px 12px;border-radius:8px;text-decoration:none;">Detail CPMK</a>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+        <!-- Tab 3: SAP (Satuan Acara Perkuliahan) -->
+        <div id="tab-sap" class="ppb-cur-pane" style="display:none;">
+            <div style="background:#FAF8F5;border:1px solid #D4E3D8;border-radius:16px;padding:24px;margin-bottom:25px;">
+                <h3 style="font-family:'Fraunces',Georgia,serif;font-size:20px;color:#0D3B22;margin:0 0 8px;">
+                    Satuan Acara Perkuliahan (SAP) Mingguan
+                </h3>
+                <p style="font-size:13px;color:#4B5563;margin:0;line-height:1.6;">
+                    Panduan operasional tatap muka per minggu (16 minggu perkuliahan termasuk UTS dan UAS) yang menjabarkan aktivitas dosen dan mahasiswa, media ajar, dan instrumen asesmen harian.
+                </p>
+            </div>
+            <div style="background:#ffffff;border:1px solid #E5E7EB;border-radius:14px;padding:24px;box-shadow:0 2px 10px rgba(0,0,0,0.03);">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+                    <strong style="color:#0D3B22;font-size:16px;">Contoh Matriks 16 Pertemuan SAP (Mata Kuliah Inti)</strong>
+                    <span style="font-size:12px;color:#6B7280;">Standar Akreditasi LAMDIK Kriteria 6</span>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));gap:12px;">
+                    <div style="background:#F9FAFB;padding:12px;border-radius:8px;border:1px solid #E5E7EB;"><strong style="font-size:12px;color:#0D3B22;display:block;">Minggu 1–2:</strong><span style="font-size:12px;color:#4B5563;">Orientasi CPL, CPMK, Kontrak Kuliah &amp; Konsep Fondasi</span></div>
+                    <div style="background:#F9FAFB;padding:12px;border-radius:8px;border:1px solid #E5E7EB;"><strong style="font-size:12px;color:#0D3B22;display:block;">Minggu 3–7:</strong><span style="font-size:12px;color:#4B5563;">Kajian Teori Mendalam, Studi Kasus (Case Method) &amp; Diskusi</span></div>
+                    <div style="background:#FEF3C7;padding:12px;border-radius:8px;border:1px solid #FCD34D;"><strong style="font-size:12px;color:#92400E;display:block;">Minggu 8:</strong><span style="font-size:12px;color:#78350F;">Evaluasi Tengah Semester (UTS) / Tes Penguasaan Konsep</span></div>
+                    <div style="background:#F9FAFB;padding:12px;border-radius:8px;border:1px solid #E5E7EB;"><strong style="font-size:12px;color:#0D3B22;display:block;">Minggu 9–14:</strong><span style="font-size:12px;color:#4B5563;">Praktikum Simulasi, Team-Based Project &amp; Penyusunan Portofolio</span></div>
+                    <div style="background:#F9FAFB;padding:12px;border-radius:8px;border:1px solid #E5E7EB;"><strong style="font-size:12px;color:#0D3B22;display:block;">Minggu 15:</strong><span style="font-size:12px;color:#4B5563;">Gelar Karya / Presentasi Laporan Proyek Konseling</span></div>
+                    <div style="background:#DCFCE7;padding:12px;border-radius:8px;border:1px solid #86EFAC;"><strong style="font-size:12px;color:#166534;display:block;">Minggu 16:</strong><span style="font-size:12px;color:#14532D;">Evaluasi Akhir Semester (UAS) / Uji Keterampilan Portofolio</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 4: Rubrik Penilaian OBE -->
+        <div id="tab-rubrik" class="ppb-cur-pane" style="display:none;">
+            <div style="background:#FAF8F5;border:1px solid #D4E3D8;border-radius:16px;padding:24px;margin-bottom:25px;">
+                <h3 style="font-family:'Fraunces',Georgia,serif;font-size:20px;color:#0D3B22;margin:0 0 8px;">
+                    Rubrik Penilaian Holistik &amp; Analitik Outcome-Based Education (OBE)
+                </h3>
+                <p style="font-size:13px;color:#4B5563;margin:0;line-height:1.6;">
+                    Sistem evaluasi pembelajaran BK UNM mengedepankan penilaian autentik dengan rubrik terstandar untuk mengukur keterampilan konseling praktis, partisipasi aktif, dan etika profesional.
+                </p>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));gap:20px;">
+                <div style="background:#ffffff;border:1px solid #D4E3D8;border-radius:14px;padding:22px;">
+                    <h4 style="color:#0D3B22;font-size:16px;font-weight:700;margin:0 0 10px;">Rubrik Kinerja Simulasi Konseling</h4>
+                    <ul style="font-size:13px;color:#4B5563;line-height:1.8;padding-left:20px;margin:0 0 16px;">
+                        <li>Keterampilan attending &amp; kontak mata (Bobot 20%)</li>
+                        <li>Empati primer &amp; respon reflektif (Bobot 25%)</li>
+                        <li>Teknik questioning &amp; eksplorasi masalah (Bobot 20%)</li>
+                        <li>Perumusan tujuan intervensi (Bobot 20%)</li>
+                        <li>Etika kerahasiaan &amp; terminasi sesi (Bobot 15%)</li>
+                    </ul>
+                    <a href="#" style="display:inline-block;background:#0D3B22;color:#ffffff;font-size:12px;font-weight:600;padding:7px 14px;border-radius:8px;text-decoration:none;">Unduh Lembar Rubrik &rarr;</a>
+                </div>
+
+                <div style="background:#ffffff;border:1px solid #D4E3D8;border-radius:14px;padding:22px;">
+                    <h4 style="color:#0D3B22;font-size:16px;font-weight:700;margin:0 0 10px;">Rubrik Penilaian Team-Based Project</h4>
+                    <ul style="font-size:13px;color:#4B5563;line-height:1.8;padding-left:20px;margin:0 0 16px;">
+                        <li>Ketepatan analisis kebutuhan (need assessment) (Bobot 25%)</li>
+                        <li>Kreativitas inovasi modul/media BK (Bobot 30%)</li>
+                        <li>Kolaborasi tim &amp; pembagian kerja (Bobot 20%)</li>
+                        <li>Kualitas laporan &amp; video dokumentasi (Bobot 25%)</li>
+                    </ul>
+                    <a href="#" style="display:inline-block;background:#0D3B22;color:#ffffff;font-size:12px;font-weight:600;padding:7px 14px;border-radius:8px;text-decoration:none;">Unduh Lembar Rubrik &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <script>
+        window.ppbSwitchCurTab = function(tabId) {
+            document.querySelectorAll('.ppb-cur-pane').forEach(function(p) { p.style.display = 'none'; });
+            document.querySelectorAll('.ppb-cur-tab-btn').forEach(function(b) {
+                b.style.background = '#ffffff';
+                b.style.color = '#374151';
+                b.style.border = '1px solid #D1D5DB';
+            });
+            var target = document.getElementById(tabId);
+            if (target) target.style.display = 'block';
+            var btn = document.querySelector('.ppb-cur-tab-btn[data-tab="' + tabId + '"]');
+            if (btn) {
+                btn.style.background = '#0D3B22';
+                btn.style.color = '#ffffff';
+                btn.style.border = 'none';
+            }
+        };
+        document.querySelectorAll('.ppb-cur-tab-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var tab = this.getAttribute('data-tab');
+                window.ppbSwitchCurTab(tab);
+            });
+        });
+        </script>
+    </section>
+    <?php
+    return ob_get_clean();
+}
+}
+add_shortcode('ppb_kurikulum_rps_sap', 'ppb_shortcode_kurikulum_rps_sap');
+
+/* ========================================================================== */
+/* 9. SHORTCODE: MIS PNBP (HIBAH PENELITIAN & PENGABDIAN MASYARAKAT)           */
+/* ========================================================================== */
+if (!function_exists('ppb_shortcode_mis_pnbp')) {
+function ppb_shortcode_mis_pnbp($atts = []) {
+    ob_start();
+    ?>
+    <section class="ppb-mis-pnbp-wrapper" style="font-family:'Poppins',sans-serif;color:#1F2937;margin:30px 0;">
+        
+        <!-- Header Banner MIS PNBP -->
+        <div style="background:#0D3B22;color:#ffffff;border-radius:20px;padding:30px;margin-bottom:30px;box-shadow:0 8px 25px rgba(13,59,34,0.15);">
+            <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(245,184,46,0.2);color:#F5B82E;padding:4px 14px;border-radius:999px;font-size:11px;font-weight:700;text-transform:uppercase;margin-bottom:12px;border:1px solid rgba(245,184,46,0.35);">
+                <span>Kriteria 7 &amp; 8 LAMDIK / BAN-PT</span>
+            </div>
+            <h2 style="font-family:'Fraunces',Georgia,serif;font-size:clamp(22px, 3vw, 30px);color:#ffffff;margin:0 0 10px;font-weight:600;">
+                MIS PNBP: Manajemen Informasi Hibah Penelitian &amp; Pengabdian Masyarakat
+            </h2>
+            <p style="color:rgba(255,255,255,0.85);font-size:14px;max-width:760px;margin:0;line-height:1.6;">
+                Pusat data transparansi pendanaan riset keilmuan dan hilirisasi pengabdian kepada masyarakat (PkM) civitas akademika Program Studi Bimbingan dan Konseling berbasis skema Pendapatan Negara Bukan Pajak (PNBP) UNM.
+            </p>
+        </div>
+
+        <!-- Tab Selector -->
+        <div style="display:flex;gap:12px;margin-bottom:25px;">
+            <button type="button" class="ppb-pnbp-btn is-active" data-pnbp="pane-riset" style="padding:11px 22px;border-radius:12px;border:none;background:#0D3B22;color:#ffffff;font-size:14px;font-weight:700;cursor:pointer;">
+                🔬 Hibah Penelitian PNBP
+            </button>
+            <button type="button" class="ppb-pnbp-btn" data-pnbp="pane-pkm" style="padding:11px 22px;border-radius:12px;border:1px solid #D1D5DB;background:#ffffff;color:#374151;font-size:14px;font-weight:600;cursor:pointer;">
+                🤝 Pengabdian kepada Masyarakat (PkM) PNBP
+            </button>
+        </div>
+
+        <!-- Pane 1: Hibah Penelitian PNBP -->
+        <div id="pane-riset" class="ppb-pnbp-pane" style="display:block;">
+            <div style="display:grid;grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));gap:20px;">
+                <?php
+                $riset_list = [
+                    [
+                        'judul' => 'Model Bimbingan dan Konseling Komprehensif Berbasis Nilai Siri’ na Pacce untuk Mereduksi Perilaku Cyberbullying Siswa SMA di Makassar',
+                        'ketua' => 'Dr. Farida Aryani, M.Pd.',
+                        'anggota' => 'Prof. Dr. H. Alimuddin Mahmud, M.Pd. & 2 Mahasiswa',
+                        'skema' => 'Penelitian Terapan Unggulan UNM (PNBP)',
+                        'tahun' => '2024',
+                        'dana' => 'Rp 45.000.000',
+                        'luaran' => 'Jurnal Internasional Bereputasi & HKI Modul'
+                    ],
+                    [
+                        'judul' => 'Pengembangan Sistem Asesmen Digital BK Connect untuk Diagnostik Dini Problem Kesejahteraan Psikologis Remaja Berbasis Web',
+                        'ketua' => 'Dr. Abdullah Pandang, M.Pd.',
+                        'anggota' => 'Dr. Muhammad Anas, M.Si. & 3 Mahasiswa',
+                        'skema' => 'Penelitian Pengembangan Institusional (PNBP)',
+                        'tahun' => '2024',
+                        'dana' => 'Rp 50.000.000',
+                        'luaran' => 'Aplikasi Web Ber-HKI & Prosiding Internasional'
+                    ],
+                    [
+                        'judul' => 'Efektivitas Konseling Kelompok Cognitive Behavior Therapy (CBT) Teknik Cognitive Restructuring terhadap Academic Burnout Mahasiswa',
+                        'ketua' => 'Prof. Dr. Syamsul Bachri Thalib, M.Si.',
+                        'anggota' => 'Dra. Hj. Sitti Halimah, M.Pd. & 2 Mahasiswa',
+                        'skema' => 'Penelitian Dasar Kolaboratif (PNBP)',
+                        'tahun' => '2023',
+                        'dana' => 'Rp 35.000.000',
+                        'luaran' => 'Jurnal Nasional Terakreditasi SINTA 2'
+                    ]
+                ];
+                foreach ($riset_list as $r) : ?>
+                    <div style="background:#ffffff;border:1px solid #D4E3D8;border-radius:16px;padding:22px;box-shadow:0 4px 15px rgba(0,0,0,0.03);display:flex;flex-direction:column;justify-content:space-between;">
+                        <div>
+                            <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                                <span style="font-size:11px;font-weight:700;background:#E8F0EA;color:#0D3B22;padding:3px 8px;border-radius:4px;"><?php echo esc_html($r['skema']); ?></span>
+                                <span style="font-size:12px;font-weight:700;color:#059669;"><?php echo esc_html($r['tahun']); ?></span>
+                            </div>
+                            <h4 style="font-size:15px;font-weight:700;color:#0D3B22;margin:0 0 10px;line-height:1.4;"><?php echo esc_html($r['judul']); ?></h4>
+                            <div style="font-size:12.5px;color:#4B5563;line-height:1.6;margin-bottom:12px;">
+                                <div><strong>Ketua Peneliti:</strong> <?php echo esc_html($r['ketua']); ?></div>
+                                <div><strong>Kolaborator:</strong> <?php echo esc_html($r['anggota']); ?></div>
+                                <div><strong>Dana Hibah:</strong> <?php echo esc_html($r['dana']); ?></div>
+                            </div>
+                        </div>
+                        <div style="font-size:12px;background:#FAF8F5;border:1px solid #E2E8F0;padding:8px 12px;border-radius:8px;color:#0D3B22;font-weight:600;">
+                            🎯 Luaran: <?php echo esc_html($r['luaran']); ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+        <!-- Pane 2: PkM PNBP -->
+        <div id="pane-pkm" class="ppb-pnbp-pane" style="display:none;">
+            <div style="display:grid;grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));gap:20px;">
+                <?php
+                $pkm_list = [
+                    [
+                        'judul' => 'Peningkatan Kompetensi Guru Bimbingan dan Konseling dalam Penerapan Asesmen Psikososial Digital Siswa Pasca Pandemi di Kabupaten Gowa',
+                        'ketua' => 'Dr. Farida Aryani, M.Pd.',
+                        'mitra' => 'Musyawarah Guru Bimbingan dan Konseling (MGBK) SMP/SMA Gowa',
+                        'skema' => 'Program Kemitraan Masyarakat (PKM-PNBP)',
+                        'tahun' => '2024',
+                        'dana' => 'Rp 30.000.000',
+                        'luaran' => 'Video Kegiatan, Modul Pelatihan, Publikasi Jurnal PkM'
+                    ],
+                    [
+                        'judul' => 'Pendampingan Konseling Sebaya (Peer Counseling) untuk Pencegahan Kekerasan Seksual & Bullying di Pesantren Wilayah Maros',
+                        'ketua' => 'Dr. H. Sulaiman, M.Pd.',
+                        'mitra' => 'Pondok Pesantren & Komunitas Remaja Sebaya',
+                        'skema' => 'Program Pengabdian Desa Binaan (PNBP)',
+                        'tahun' => '2024',
+                        'dana' => 'Rp 35.000.000',
+                        'luaran' => 'Buku Panduan Kader Sebaya & Berita Media Massa'
+                    ],
+                    [
+                        'judul' => 'Pelatihan Terapi Relaksasi dan Manajemen Emosi bagi Konselor Sekolah Inklusif di Kota Makassar',
+                        'ketua' => 'Dra. Hj. Sitti Halimah, M.Pd.',
+                        'mitra' => 'Forum Guru Inklusi & SLB Negeri 1 Makassar',
+                        'skema' => 'Program Kemitraan Masyarakat (PKM-PNBP)',
+                        'tahun' => '2023',
+                        'dana' => 'Rp 25.000.000',
+                        'luaran' => 'Jurnal Pengabdian Nasional & HKI Panduan'
+                    ]
+                ];
+                foreach ($pkm_list as $p) : ?>
+                    <div style="background:#ffffff;border:1px solid #D4E3D8;border-radius:16px;padding:22px;box-shadow:0 4px 15px rgba(0,0,0,0.03);display:flex;flex-direction:column;justify-content:space-between;">
+                        <div>
+                            <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                                <span style="font-size:11px;font-weight:700;background:#FEF3C7;color:#92400E;padding:3px 8px;border-radius:4px;"><?php echo esc_html($p['skema']); ?></span>
+                                <span style="font-size:12px;font-weight:700;color:#059669;"><?php echo esc_html($p['tahun']); ?></span>
+                            </div>
+                            <h4 style="font-size:15px;font-weight:700;color:#0D3B22;margin:0 0 10px;line-height:1.4;"><?php echo esc_html($p['judul']); ?></h4>
+                            <div style="font-size:12.5px;color:#4B5563;line-height:1.6;margin-bottom:12px;">
+                                <div><strong>Ketua Pelaksana:</strong> <?php echo esc_html($p['ketua']); ?></div>
+                                <div><strong>Mitra Kegiatan:</strong> <?php echo esc_html($p['mitra']); ?></div>
+                                <div><strong>Dana PNBP:</strong> <?php echo esc_html($p['dana']); ?></div>
+                            </div>
+                        </div>
+                        <div style="font-size:12px;background:#FAF8F5;border:1px solid #E2E8F0;padding:8px 12px;border-radius:8px;color:#0D3B22;font-weight:600;">
+                            🎯 Luaran: <?php echo esc_html($p['luaran']); ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+        <script>
+        document.querySelectorAll('.ppb-pnbp-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var target = this.getAttribute('data-pnbp');
+                document.querySelectorAll('.ppb-pnbp-pane').forEach(function(pane) { pane.style.display = 'none'; });
+                document.querySelectorAll('.ppb-pnbp-btn').forEach(function(b) {
+                    b.style.background = '#ffffff';
+                    b.style.color = '#374151';
+                    b.style.border = '1px solid #D1D5DB';
+                });
+                var activePane = document.getElementById(target);
+                if (activePane) activePane.style.display = 'block';
+                this.style.background = '#0D3B22';
+                this.style.color = '#ffffff';
+                this.style.border = 'none';
+            });
+        });
+        </script>
+    </section>
+    <?php
+    return ob_get_clean();
+}
+}
+add_shortcode('ppb_mis_pnbp', 'ppb_shortcode_mis_pnbp');
+
+/* ========================================================================== */
+/* 10. SHORTCODE: JURNAL & PENGABDIAN YANG DIKELOLA PRODI BK                  */
+/* ========================================================================== */
+if (!function_exists('ppb_shortcode_jurnal_bk')) {
+function ppb_shortcode_jurnal_bk($atts = []) {
+    ob_start();
+    ?>
+    <section class="ppb-jurnal-wrapper" style="font-family:'Poppins',sans-serif;color:#1F2937;margin:30px 0;">
+        
+        <div style="background:#0D3B22;color:#ffffff;border-radius:20px;padding:30px;margin-bottom:30px;box-shadow:0 8px 25px rgba(13,59,34,0.15);">
+            <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(245,184,46,0.2);color:#F5B82E;padding:4px 14px;border-radius:999px;font-size:11px;font-weight:700;text-transform:uppercase;margin-bottom:12px;border:1px solid rgba(245,184,46,0.35);">
+                <span>Publikasi Ilmiah &amp; Diseminasi Riset</span>
+            </div>
+            <h2 style="font-family:'Fraunces',Georgia,serif;font-size:clamp(22px, 3vw, 30px);color:#ffffff;margin:0 0 10px;font-weight:600;">
+                Jurnal &amp; Pengabdian yang Dikelola Program Studi Bimbingan dan Konseling
+            </h2>
+            <p style="color:rgba(255,255,255,0.85);font-size:14px;max-width:760px;margin:0;line-height:1.6;">
+                Dua jurnal peer-reviewed resmi yang memuat karya riset empiris dan artikel pengabdian masyarakat di bidang bimbingan, konseling, dan psikologi pendidikan terapan.
+            </p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:24px;">
+            
+            <!-- Jurnal 1: JBK -->
+            <div style="background:#ffffff;border:1.5px solid #D4E3D8;border-radius:18px;padding:26px;box-shadow:0 6px 20px rgba(0,0,0,0.04);display:flex;flex-direction:column;justify-content:space-between;">
+                <div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                        <span style="background:#DCFCE7;color:#166534;font-size:11.5px;font-weight:700;padding:4px 12px;border-radius:6px;border:1px solid #86EFAC;">
+                            🏅 Terakreditasi SINTA 3
+                        </span>
+                        <span style="font-size:12px;color:#6B7280;font-weight:600;">e-ISSN: 2580-0442</span>
+                    </div>
+                    <h3 style="font-family:'Fraunces',Georgia,serif;font-size:20px;color:#0D3B22;margin:0 0 10px;line-height:1.3;">
+                        Jurnal Bimbingan dan Konseling (JBK)
+                    </h3>
+                    <p style="font-size:13.5px;color:#4B5563;line-height:1.6;margin:0 0 16px;">
+                        Jurnal ilmiah berkala yang mempublikasikan hasil penelitian orisinal mengenai teori konseling, asesmen psikologis, intervensi perilaku, dan konseling lintas budaya.
+                    </p>
+                    <div style="font-size:12.5px;background:#FAF8F5;padding:12px 14px;border-radius:10px;border:1px solid #E5E7EB;margin-bottom:18px;line-height:1.6;color:#374151;">
+                        <div><strong>Penerbit:</strong> Jurusan PPB / Prodi BK FIP UNM</div>
+                        <div><strong>Frekuensi:</strong> 2 Kali Setahun (Juni &amp; Desember)</div>
+                        <div><strong>Pengindeks:</strong> SINTA, Google Scholar, Garuda, Crossref (DOI)</div>
+                    </div>
+                </div>
+                <div style="display:flex;gap:10px;">
+                    <a href="https://ojs.unm.ac.id/JBK" target="_blank" rel="noopener" style="flex:1;text-align:center;background:#0D3B22;color:#ffffff;font-size:13px;font-weight:700;padding:11px 16px;border-radius:10px;text-decoration:none;">
+                        Kunjungi Portal Jurnal OJS &rarr;
+                    </a>
+                    <a href="https://ojs.unm.ac.id/JBK/about/submissions" target="_blank" rel="noopener" style="background:#FAF8F5;color:#0D3B22;border:1px solid #D4E3D8;font-size:13px;font-weight:600;padding:11px 14px;border-radius:10px;text-decoration:none;">
+                        Pedoman Submit
+                    </a>
+                </div>
+            </div>
+
+            <!-- Jurnal 2: Jurnal Pengabdian Konseling Nusantara (JPKN) -->
+            <div style="background:#ffffff;border:1.5px solid #D4E3D8;border-radius:18px;padding:26px;box-shadow:0 6px 20px rgba(0,0,0,0.04);display:flex;flex-direction:column;justify-content:space-between;">
+                <div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                        <span style="background:#FEF3C7;color:#92400E;font-size:11.5px;font-weight:700;padding:4px 12px;border-radius:6px;border:1px solid #FCD34D;">
+                            🏅 Terindeks SINTA 4 / Garuda
+                        </span>
+                        <span style="font-size:12px;color:#6B7280;font-weight:600;">e-ISSN: 2775-8915</span>
+                    </div>
+                    <h3 style="font-family:'Fraunces',Georgia,serif;font-size:20px;color:#0D3B22;margin:0 0 10px;line-height:1.3;">
+                        Jurnal Pengabdian Konseling Nusantara (JPKN)
+                    </h3>
+                    <p style="font-size:13.5px;color:#4B5563;line-height:1.6;margin:0 0 16px;">
+                        Media diseminasi aksi nyata pengabdian kepada masyarakat, pendampingan konseling sekolah, pemberdayaan komunitas rentan, dan pelatihan kesehatan mental.
+                    </p>
+                    <div style="font-size:12.5px;background:#FAF8F5;padding:12px 14px;border-radius:10px;border:1px solid #E5E7EB;margin-bottom:18px;line-height:1.6;color:#374151;">
+                        <div><strong>Penerbit:</strong> Prodi BK FIP bekerjasama dengan LP2M UNM</div>
+                        <div><strong>Frekuensi:</strong> 2 Kali Setahun (April &amp; Oktober)</div>
+                        <div><strong>Pengindeks:</strong> Google Scholar, Garuda, Moraref, ROAD</div>
+                    </div>
+                </div>
+                <div style="display:flex;gap:10px;">
+                    <a href="https://ojs.unm.ac.id/JPKN" target="_blank" rel="noopener" style="flex:1;text-align:center;background:#0D3B22;color:#ffffff;font-size:13px;font-weight:700;padding:11px 16px;border-radius:10px;text-decoration:none;">
+                        Kunjungi Portal Jurnal OJS &rarr;
+                    </a>
+                    <a href="https://ojs.unm.ac.id/JPKN/about/submissions" target="_blank" rel="noopener" style="background:#FAF8F5;color:#0D3B22;border:1px solid #D4E3D8;font-size:13px;font-weight:600;padding:11px 14px;border-radius:10px;text-decoration:none;">
+                        Pedoman Submit
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+    <?php
+    return ob_get_clean();
+}
+}
+add_shortcode('ppb_jurnal_bk', 'ppb_shortcode_jurnal_bk');
